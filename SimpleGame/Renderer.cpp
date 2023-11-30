@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include "Renderer.h"
+#include "LoadPng.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -48,6 +49,42 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	}
 	*/
 
+	// 텍스처 로드
+	m_ChessboardTexture = CreatePngTexture("./Texture/Chessboard_Base_Color.png", GL_NEAREST);
+
+	/*
+	int texUloc = glGetUniformLocation(program, "u_Texture");
+	glUniform1f(texUloc, 0);
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindTexture(GL_TEXTURE_2D, m_ChessboardTexture);
+
+	glDrawArrays(GL_TRIANGLES, 0, m_ParticleVertexCount);
+	*/
+
+}
+
+GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
+{
+	//Load Png
+	std::vector<unsigned char> image;
+	unsigned width, height;
+	unsigned error = lodepng::decode(image, width, height, filePath);
+	if (error != 0)
+	{
+		std::cout << "PNG image loading failed:" << filePath << std::endl;
+		assert(0);
+	}
+
+	GLuint temp;
+	glGenTextures(1, &temp);
+	glBindTexture(GL_TEXTURE_2D, temp);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, samplingMethod);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, samplingMethod);
+
+	return temp;
 }
 
 bool Renderer::IsInitialized()
@@ -360,6 +397,12 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardVBO);
 	glBufferData(GL_ARRAY_BUFFER, ChessboardVertices.size() * sizeof(glm::vec3), &ChessboardVertices[0], GL_STATIC_DRAW);
 
+	// 체스판 텍스처 적용
+	glGenBuffers(1, &m_ChessboardTextureVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardTextureVBO);
+	glBufferData(GL_ARRAY_BUFFER, ChessboardUVs.size() * sizeof(glm::vec2), &ChessboardUVs[0], GL_STATIC_DRAW);
+
+
 	// 화이트 진영
 	// 화이트 폰
 	glGenBuffers(1, &m_W_Pawn1VBO);
@@ -535,10 +578,26 @@ void Renderer::DrawParticle2()
 	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
 	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_ChessboardTranslation));
 
+	/*int posLoc0 = glGetAttribLocation(program, "a_Position");
+	glEnableVertexAttribArray(posLoc0);
+	int ColorLoc0 = glGetAttribLocation(program, "a_Color");
+	glEnableVertexAttribArray(ColorLoc0);*/
+	int uvLoc = glGetAttribLocation(program, "a_UV");
+	glEnableVertexAttribArray(uvLoc);
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardVBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	//glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
+	//glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardTextureVBO);
+	glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);  //5번째 인자: stride. 바이트 단위
+
+
+	int texUloc = glGetUniformLocation(program, "u_Texture");
+	glUniform1f(texUloc, 0);
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindTexture(GL_TEXTURE_2D, m_ChessboardTexture);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 576);
 

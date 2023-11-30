@@ -2,6 +2,7 @@
 
 in vec3 a_Position;		// in = 입력 , out = 출력
 in vec3 a_Color;
+in vec2 a_UV;
 
 // 유니폼
 
@@ -10,6 +11,7 @@ uniform mat4 CameraTransfrom;
 uniform mat4 projectionTransform;
 
 out vec3 v_Color;			//v == Varying
+out vec2 v_UV;
 
 void main()
 {
@@ -17,4 +19,5 @@ void main()
 
 
 	v_Color = a_Color;
+	v_UV = a_UV;
 }

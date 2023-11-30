@@ -29,6 +29,7 @@ private:
 	bool ReadFile(char* filename, std::string *target);
 	void AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType);
 	GLuint CompileShaders(char* filenameVS, char* filenameFS);
+	GLuint CreatePngTexture(char* filePath, GLuint samplingMethod);
 	void GetGLPosition(float x, float y, float *newX, float *newY);
 	void Class0310();
 
@@ -58,6 +59,9 @@ private:
 
 	// 체스 판
 	GLuint m_ChessboardVBO = -1;
+	GLuint m_ChessboardTexture = -1;
+	GLuint m_ChessboardTextureVBO = -1;
+
 
 	// 체스 화이트 진영
 	// 폰
