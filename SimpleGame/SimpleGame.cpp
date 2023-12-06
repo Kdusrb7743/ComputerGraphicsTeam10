@@ -19,12 +19,12 @@ using namespace std;
 
 Renderer *g_Renderer = NULL;
 
-
+void TurnOverCameraRotationAnimation(int value);
 
 void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Renderer Test
 	//g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
@@ -44,23 +44,41 @@ void MouseInput(int button, int state, int x, int y)
 	RenderScene();
 }
 
-extern float CameraXOrbitRadians;		// 카메라 공전 회전각
-extern float CameraYOrbitRadians;
-extern float CameraYRotatingRadians;	// 카메라 자전 회전각
-extern float CameraXMove;
-extern float CameraZMove;
+// Renderer.cpp 전역변수 불러오기
+extern float TurnChangeRadians;
 
+// 전역변수
+bool IsTurnOver = false;
 
 void KeyInput(unsigned char key, int x, int y)
 {
 	switch (key) {
-	case 'b':
-
+	case 't':
+		if (IsTurnOver == false) {
+			IsTurnOver = true;
+			TurnOverCameraRotationAnimation(1);
+			//애니메이션
+		}
+		else if (IsTurnOver == true) {
+			IsTurnOver = false;
+			TurnOverCameraRotationAnimation(1);
+		}
 		break;
 	}
 	RenderScene();
 }
 
+void TurnOverCameraRotationAnimation(int value) {
+	TurnChangeRadians += 2.0f;
+
+	if (((int)TurnChangeRadians % 180) != 0) {	//180까지 변경
+		glutTimerFunc(4, TurnOverCameraRotationAnimation, 1);
+	}
+	else {
+
+	}
+
+}
 
 void SpecialKeyInput(int key, int x, int y)
 {

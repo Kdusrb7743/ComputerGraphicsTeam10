@@ -51,6 +51,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	// 텍스처 로드
 	m_ChessboardTexture = CreatePngTexture("./Texture/Chessboard_Base_Color.png", GL_NEAREST);
+	m_WhiteTexture = CreatePngTexture("./Texture/White.png", GL_NEAREST);
+	m_BlackTexture = CreatePngTexture("./Texture/Black.png", GL_NEAREST);
 
 	/*
 	int texUloc = glGetUniformLocation(program, "u_Texture");
@@ -398,9 +400,14 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, ChessboardVertices.size() * sizeof(glm::vec3), &ChessboardVertices[0], GL_STATIC_DRAW);
 
 	// 체스판 텍스처 적용
-	glGenBuffers(1, &m_ChessboardTextureVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardTextureVBO);
+	glGenBuffers(1, &m_ChessboardUVVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardUVVBO);
 	glBufferData(GL_ARRAY_BUFFER, ChessboardUVs.size() * sizeof(glm::vec2), &ChessboardUVs[0], GL_STATIC_DRAW);
+
+	// 체스판 노말
+	glGenBuffers(1, &m_ChessboardNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, ChessboardUVsNormals.size() * sizeof(glm::vec3), &ChessboardUVsNormals[0], GL_STATIC_DRAW);
 
 
 	// 화이트 진영
@@ -437,6 +444,16 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn8VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Pawn8Vertices.size() * sizeof(glm::vec3), &W_Pawn8Vertices[0], GL_STATIC_DRAW);
 
+	//폰 UV
+	glGenBuffers(1, &m_PawnUVVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnUVVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_Pawn1UVs.size() * sizeof(glm::vec2), &W_Pawn1UVs[0], GL_STATIC_DRAW);
+
+	//폰 노말
+	glGenBuffers(1, &m_PawnNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_Pawn1UVsNormals.size() * sizeof(glm::vec3), &W_Pawn1UVsNormals[0], GL_STATIC_DRAW);
+
 	// 화이트 비숍
 	glGenBuffers(1, &m_W_Bishop1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop1VBO);
@@ -445,6 +462,12 @@ void Renderer::CreateVertexBufferObjects()
 	glGenBuffers(1, &m_W_Bishop2VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Bishop2Vertices.size() * sizeof(glm::vec3), &W_Bishop2Vertices[0], GL_STATIC_DRAW);
+
+	// 비숍 노말
+	glGenBuffers(1, &m_BishopNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_Bishop1UVsNormals.size() * sizeof(glm::vec3), &W_Bishop1UVsNormals[0], GL_STATIC_DRAW);
+
 
 	// 화이트 나이트
 	glGenBuffers(1, &m_W_Knight1VBO);
@@ -455,6 +478,12 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Knight2Vertices.size() * sizeof(glm::vec3), &W_Knight2Vertices[0], GL_STATIC_DRAW);
 
+	// 나이트 노말
+	glGenBuffers(1, &m_KnightNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_Knight1UVsNormals.size() * sizeof(glm::vec3), &W_Knight1UVsNormals[0], GL_STATIC_DRAW);
+
+
 	// 화이트 룩
 	glGenBuffers(1, &m_W_Rook1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook1VBO);
@@ -464,21 +493,33 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Rook2Vertices.size() * sizeof(glm::vec3), &W_Rook2Vertices[0], GL_STATIC_DRAW);
 
+	// 룩 노말
+	glGenBuffers(1, &m_RookNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_Rook1UVsNormals.size() * sizeof(glm::vec3), &W_Rook1UVsNormals[0], GL_STATIC_DRAW);
+
+
 	// 화이트 퀸
 	glGenBuffers(1, &m_W_QueenVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_QueenVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_QueenVertices.size() * sizeof(glm::vec3), &W_QueenVertices[0], GL_STATIC_DRAW);
+
+	// 퀸 노말
+	glGenBuffers(1, &m_QueenNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_QueenUVsNormals.size() * sizeof(glm::vec3), &W_QueenUVsNormals[0], GL_STATIC_DRAW);
+
 
 	// 화이트 킹
 	glGenBuffers(1, &m_W_KingVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_KingVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_KingVertices.size() * sizeof(glm::vec3), &W_KingVertices[0], GL_STATIC_DRAW);
 
+	// 킹 노말
+	glGenBuffers(1, &m_KingNormalVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
+	glBufferData(GL_ARRAY_BUFFER, W_KingUVsNormals.size() * sizeof(glm::vec3), &W_KingUVsNormals[0], GL_STATIC_DRAW);
 
-	// 모든 삼각형 컬러
-	glGenBuffers(1, &m_CraneColorVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(CubeColor), CubeColor, GL_STATIC_DRAW);
 
 }
 
@@ -488,11 +529,9 @@ void Renderer::DrawParticle() //문제 1번
 
 //전역변수
 
-float CameraXOrbitRadians = 30.f;		// 카메라 공전 회전각
-float CameraYOrbitRadians = 0.f;
-float CameraYRotatingRadians = 0.f;		// 카메라 자전 회전각
-float CameraXMove = 0.0f;				// 카메라 위치 이동
-float CameraZMove = 0.0f;
+float CameraXRadians = 70.f;		// 카메라 공전 회전각
+float CameraYRadians = 0.f;
+float TurnChangeRadians = 0.f;
 
 
 void Renderer::DrawParticle2()					
@@ -509,51 +548,42 @@ void Renderer::DrawParticle2()
 	//glFrontFace(GL_CW);
 
 
-	// 카메라 변환
+	// 단위 벡터
 	glm::mat4 UnitVector(1.f);
 
 	//모델링 변환 초기화
 	unsigned int UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
 	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(UnitVector));
 
+	// --------------------------------------------------카메라 변환--------------------------------------------ㄴ
 	glm::mat4 CameraTraslation(1.f);		// 카메라 최종 변환
 
-	glm::mat4 CameraTranslateMatrix(1.0f);	// 카메라 이동 변환
+	glm::mat4 CameraTranslateMatrix(1.0f);	// 카메라 이동 변환	: 카메라의 위치 초기화
+	glm::mat4 CameraRotationMatrix(1.0f);	// 카메라 회전 변환	: 카메라의 위치 초기화
+	glm::mat4 CameraTurnChangeMatrix(1.0f);	// 카메라 회전 변환 : 초기화된 카메라를 각 턴에 맞게 회전
 
-	glm::mat4 CameraXOrbitRotateMatrix(1.0f);	// 카메라 공전
-	glm::mat4 CameraYOrbitRotateMatrix(1.0f);
+	CameraRotationMatrix = glm::rotate(UnitVector, glm::radians(CameraXRadians), glm::vec3(1.0f, 0.0f, 0.0f));	//x축으로 
+	CameraTranslateMatrix = glm::translate(UnitVector, glm::vec3(-1.62, 0.0, -1.62));
 
-	glm::mat4 CameraYRotatingMatrix(1.0f);	// 카메라 자전
-	glm::mat4 CameraYRotatingTranslateMatrix(1.0f);		// 카메라 자전 시에 먼저 좌표축z을 가운데로 옮김
-	glm::mat4 CameraYRotatingTranslateOriMatrix(1.0f);	// 카메라 자전 시에 좌표축z 되돌림
-	glm::mat4 CameraYRotatingRotateOriMatrix(1.0f);	// 카메라 자전 시에 좌표축z 되돌림
+	CameraTurnChangeMatrix = glm::rotate(UnitVector, glm::radians(TurnChangeRadians), glm::vec3(0.0f, 1.0f, 0.0f)); //y축회전
 
-	CameraXOrbitRotateMatrix = glm::rotate(UnitVector, glm::radians(CameraXOrbitRadians), glm::vec3(1.0f, 0.0f, 0.0f));	//x축으로 
-	CameraYOrbitRotateMatrix = glm::rotate(UnitVector, glm::radians(CameraYOrbitRadians), glm::vec3(0.0f, 1.0f, 0.0f));	//y축으로 
-
-	CameraTranslateMatrix = glm::translate(UnitVector, glm::vec3(CameraXMove, 0, CameraZMove));
-
-	CameraYRotatingTranslateMatrix = glm::translate(UnitVector, glm::vec3(0, 0, -3.f));
-	CameraYRotatingRotateOriMatrix = glm::rotate(UnitVector, glm::radians(CameraYRotatingRadians), glm::vec3(0.0f, 1.0f, 0.0f));
-	CameraYRotatingTranslateOriMatrix = glm::translate(UnitVector, glm::vec3(0, 0, 3.f));
-
-	CameraYRotatingMatrix = CameraYRotatingTranslateOriMatrix * CameraYRotatingRotateOriMatrix * CameraYRotatingTranslateMatrix;
-
-	CameraTraslation = CameraXOrbitRotateMatrix * CameraYOrbitRotateMatrix * CameraTranslateMatrix * CameraYRotatingMatrix;
+	CameraTraslation = CameraRotationMatrix * CameraTurnChangeMatrix * CameraTranslateMatrix;
 
 	unsigned int RotateLocation = glGetUniformLocation(program, "CameraTransfrom");
 	glUniformMatrix4fv(RotateLocation, 1, GL_FALSE, glm::value_ptr(CameraTraslation));
 
 
 
+	//----------------------------------------------------------원근투영 변환-----------------------------------
+
 	glm::mat4 projection(1.0f);
 
-	//원근투영 변환
 	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f); //--- 투영 공간 설정: fovy, aspect, near, far
-	projection = glm::translate(projection, glm::vec3(-1.5, 0.0, -8.0));		//--- 공간을 z축 이동
+	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));		//--- 공간을 z축 이동
 
 	unsigned int ProjectionLocation = glGetUniformLocation(program, "projectionTransform");
 	glUniformMatrix4fv(ProjectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
 
 	//가로세로 라인
 	int posLoc0 = glGetAttribLocation(program, "a_Position");
@@ -567,6 +597,17 @@ void Renderer::DrawParticle2()
 
 	glDrawArrays(GL_LINES, 0, 6);
 
+	
+	//-----------------------------------------------조명----------------------------------
+	//조명 유니폼
+	unsigned int lightPosLocation = glGetUniformLocation(program, "lightPos");	   //--- lightPos 값 전달: (0.0, 0.0, 5.0);
+	glUniform3f(lightPosLocation, 5.0, 4.0, 5.0);		//조명 위치
+	unsigned int lightColorLocation = glGetUniformLocation(program, "lightColor"); //--- lightColor 값 전달: (1.0, 1.0, 1.0) 백색
+	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);		//조명 색깔
+	unsigned int viewPosLocation = glGetUniformLocation(program, "viewPos"); //--- viewPos 값 전달: 카메라 위치
+	glUniform3f(viewPosLocation, 10.0, 110.0, 10.0);		//카메라 위치
+
+
 
 	// ----------------------------------------------오브젝트 위치변환-----------------------------------------
 
@@ -578,20 +619,17 @@ void Renderer::DrawParticle2()
 	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
 	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_ChessboardTranslation));
 
-	/*int posLoc0 = glGetAttribLocation(program, "a_Position");
-	glEnableVertexAttribArray(posLoc0);
-	int ColorLoc0 = glGetAttribLocation(program, "a_Color");
-	glEnableVertexAttribArray(ColorLoc0);*/
 	int uvLoc = glGetAttribLocation(program, "a_UV");
+	glEnableVertexAttribArray(uvLoc);
+	int NormalLoc = glGetAttribLocation(program, "a_Normal");
 	glEnableVertexAttribArray(uvLoc);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardVBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	//glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	//glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardTextureVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardUVVBO);
 	glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);  //5번째 인자: stride. 바이트 단위
-
+	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	int texUloc = glGetUniformLocation(program, "u_Texture");
 	glUniform1f(texUloc, 0);
@@ -612,8 +650,14 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook1VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	texUloc = glGetUniformLocation(program, "u_Texture");
+	glUniform1f(texUloc, 0);
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindTexture(GL_TEXTURE_2D, m_WhiteTexture);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
@@ -628,8 +672,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight1VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
@@ -644,8 +688,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop1VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
@@ -660,8 +704,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_QueenVBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
 
@@ -676,8 +720,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_KingVBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
 
@@ -692,8 +736,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop2VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
@@ -708,8 +752,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight2VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
@@ -724,8 +768,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook2VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
@@ -740,8 +784,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn1VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -756,8 +800,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn2VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -772,8 +816,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn3VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -789,8 +833,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn4VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -805,8 +849,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn5VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -821,8 +865,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn6VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -837,8 +881,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn7VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
@@ -853,8 +897,8 @@ void Renderer::DrawParticle2()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn8VBO);
 	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
-	glBindBuffer(GL_ARRAY_BUFFER, m_CraneColorVBO);
-	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
 
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 

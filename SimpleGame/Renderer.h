@@ -60,7 +60,12 @@ private:
 	// 체스 판
 	GLuint m_ChessboardVBO = -1;
 	GLuint m_ChessboardTexture = -1;
-	GLuint m_ChessboardTextureVBO = -1;
+	GLuint m_ChessboardUVVBO = -1;
+	GLuint m_ChessboardNormalVBO = -1;
+
+	// 흰색 검은색 텍스처
+	GLuint m_WhiteTexture = -1;
+	GLuint m_BlackTexture = -1;
 
 
 	// 체스 화이트 진영
@@ -74,23 +79,31 @@ private:
 	GLuint m_W_Pawn7VBO = -1;
 	GLuint m_W_Pawn8VBO = -1;
 
+	GLuint m_PawnUVVBO = -1;
+	GLuint m_PawnNormalVBO = -1;
+
 	// 비숍
 	GLuint m_W_Bishop1VBO = -1;
 	GLuint m_W_Bishop2VBO = -1;
+	GLuint m_BishopNormalVBO = -1;
 
 	// 나이트
 	GLuint m_W_Knight1VBO = -1;
 	GLuint m_W_Knight2VBO = -1;
+	GLuint m_KnightNormalVBO = -1;
 
 	// 룩
 	GLuint m_W_Rook1VBO = -1;
 	GLuint m_W_Rook2VBO = -1;
+	GLuint m_RookNormalVBO = -1;
 
 	// 퀸
 	GLuint m_W_QueenVBO = -1;
+	GLuint m_QueenNormalVBO = -1;
 
 	// 킹
 	GLuint m_W_KingVBO = -1;
+	GLuint m_KingNormalVBO = -1;
 
   
 
