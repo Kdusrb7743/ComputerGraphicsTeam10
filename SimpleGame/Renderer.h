@@ -63,12 +63,19 @@ private:
 	GLuint m_ChessboardUVVBO = -1;
 	GLuint m_ChessboardNormalVBO = -1;
 
-	// 흰색 검은색 텍스처
+	// 체스 흰색 검은색 텍스처
 	GLuint m_WhiteTexture = -1;
 	GLuint m_BlackTexture = -1;
 
+	//각 체스말 노말
+	GLuint m_PawnNormalVBO = -1;
+	GLuint m_BishopNormalVBO = -1;
+	GLuint m_KnightNormalVBO = -1;
+	GLuint m_RookNormalVBO = -1;
+	GLuint m_QueenNormalVBO = -1;
+	GLuint m_KingNormalVBO = -1;
 
-	// 체스 화이트 진영
+	// 체스 화이트 진영	+ 노말
 	// 폰
 	GLuint m_W_Pawn1VBO = -1;
 	GLuint m_W_Pawn2VBO = -1;
@@ -78,37 +85,55 @@ private:
 	GLuint m_W_Pawn6VBO = -1;
 	GLuint m_W_Pawn7VBO = -1;
 	GLuint m_W_Pawn8VBO = -1;
-
 	GLuint m_PawnUVVBO = -1;
-	GLuint m_PawnNormalVBO = -1;
 
 	// 비숍
 	GLuint m_W_Bishop1VBO = -1;
 	GLuint m_W_Bishop2VBO = -1;
-	GLuint m_BishopNormalVBO = -1;
 
 	// 나이트
 	GLuint m_W_Knight1VBO = -1;
 	GLuint m_W_Knight2VBO = -1;
-	GLuint m_KnightNormalVBO = -1;
 
 	// 룩
 	GLuint m_W_Rook1VBO = -1;
 	GLuint m_W_Rook2VBO = -1;
-	GLuint m_RookNormalVBO = -1;
 
 	// 퀸
 	GLuint m_W_QueenVBO = -1;
-	GLuint m_QueenNormalVBO = -1;
 
 	// 킹
 	GLuint m_W_KingVBO = -1;
-	GLuint m_KingNormalVBO = -1;
 
-  
 
-	GLuint m_CraneColorVBO = -1;	
+	// 체스 블랙 진영
+	// 폰
+	GLuint m_B_Pawn1VBO = -1;
+	GLuint m_B_Pawn2VBO = -1;
+	GLuint m_B_Pawn3VBO = -1;
+	GLuint m_B_Pawn4VBO = -1;
+	GLuint m_B_Pawn5VBO = -1;
+	GLuint m_B_Pawn6VBO = -1;
+	GLuint m_B_Pawn7VBO = -1;
+	GLuint m_B_Pawn8VBO = -1;
 
+	// 비숍
+	GLuint m_B_Bishop1VBO = -1;
+	GLuint m_B_Bishop2VBO = -1;
+
+	// 나이트
+	GLuint m_B_Knight1VBO = -1;
+	GLuint m_B_Knight2VBO = -1;
+
+	// 룩
+	GLuint m_B_Rook1VBO = -1;
+	GLuint m_B_Rook2VBO = -1;
+
+	// 퀸
+	GLuint m_B_QueenVBO = -1;
+
+	// 킹
+	GLuint m_B_KingVBO = -1;
 
 
 

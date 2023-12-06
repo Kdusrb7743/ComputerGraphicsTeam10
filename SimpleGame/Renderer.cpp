@@ -54,16 +54,6 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_WhiteTexture = CreatePngTexture("./Texture/White.png", GL_NEAREST);
 	m_BlackTexture = CreatePngTexture("./Texture/Black.png", GL_NEAREST);
 
-	/*
-	int texUloc = glGetUniformLocation(program, "u_Texture");
-	glUniform1f(texUloc, 0);
-	glActiveTexture(GL_TEXTURE0);
-
-	glBindTexture(GL_TEXTURE_2D, m_ChessboardTexture);
-
-	glDrawArrays(GL_TRIANGLES, 0, m_ParticleVertexCount);
-	*/
-
 }
 
 GLuint Renderer::CreatePngTexture(char* filePath, GLuint samplingMethod)
@@ -216,78 +206,13 @@ float CenterCrossLinePos[] =		//가로세로 깊이
 
 };
 
-float CubeColor[] = {
-	   0.5f, 0.0f, 0.5f,//4
-	   0.0f, 0.0f, 1.0f,//0
-	   0.0f, 0.0f, 0.0f,//3
-
-	   0.5f, 0.0f, 0.5f,//4
-	   0.0f, 0.0f, 0.0f,//3
-	   1.0f, 0.0f, 0.0f,//7
-
-	   0.0f, 1.0f, 0.0f,//2
-	   0.5f, 0.5f, 0.0f,//6
-	   1.0f, 0.0f, 0.0f,//7
-
-	   0.0f, 1.0f, 0.0f,//2
-	   1.0f, 0.0f, 0.0f,//7
-	   0.0f, 0.0f, 0.0f,//3
-
-	   0.0f, 0.5f, 0.5f,//1
-	   1.0f, 1.0f, 1.0f,//5
-	   0.0f, 1.0f, 0.0f,//2
-
-	   1.0f, 1.0f, 1.0f,//5
-	   0.5f, 0.5f, 0.0f,//6
-	   0.0f, 1.0f, 0.0f,//2
-
-	   0.0f, 0.0f, 1.0f,//0
-	   0.5f, 0.0f, 0.5f,//4
-	   0.0f, 0.5f, 0.5f,//1
-
-	   0.5f, 0.0f, 0.5f,//4
-	   1.0f, 1.0f, 1.0f,//5
-	   0.0f, 0.5f, 0.5f,//1
-
-	   0.5f, 0.0f, 0.5f,//4
-	   1.0f, 0.0f, 0.0f,//7
-	   1.0f, 1.0f, 1.0f,//5
-
-	   1.0f, 0.0f, 0.0f,//7
-	   0.5f, 0.5f, 0.0f,//6
-	   1.0f, 1.0f, 1.0f,//5
-
-	   0.0f, 0.0f, 1.0f,//0
-	   0.0f, 0.5f, 0.5f,//1
-	   0.0f, 1.0f, 0.0f,//2
-
-	   0.0f, 0.0f, 1.0f,//0
-	   0.0f, 1.0f, 0.0f,//2
-	   0.0f, 0.0f, 0.0f,//3
-
-	   0.0f, 0.0f, 0.0f,
-	   0.0f, 0.0f, 0.0f,
-	   0.0f, 0.0f, 0.0f,
-	   0.0f, 0.0f, 0.0f
-};
-
-// 큰 밑바닥
-float Floor[] =
-{
-	 2.0f, 0.0f,  2.0f,  1.0f, 0.0f, 0.0f,
-	 2.0f, 0.0f, -2.0f,  0.0f, 1.0f, 0.0f,
-	-2.0f, 0.0f,  2.0f,  0.0f, 0.0f, 1.0f,
-	-2.0f, 0.0f,  2.0f,  0.0f, 0.0f, 1.0f,
-	 2.0f, 0.0f, -2.0f,  0.0f, 1.0f, 0.0f,
-	-2.0f, 0.0f, -2.0f,  1.0f, 0.0f, 0.0f,
-
-};
 
 // 체스판
 std::vector<glm::vec3> ChessboardVertices;
 std::vector<glm::vec2> ChessboardUVs;
 std::vector<glm::vec3> ChessboardUVsNormals;
 
+//---------------------------------------화이트 체스말-----------------------------
 // 화이트 폰
 std::vector<glm::vec3> W_Pawn1Vertices;
 std::vector<glm::vec2> W_Pawn1UVs;
@@ -358,6 +283,78 @@ std::vector<glm::vec3> W_KingVertices;
 std::vector<glm::vec2> W_KingUVs;
 std::vector<glm::vec3> W_KingUVsNormals;
 
+//---------------------------------------블랙 체스말-----------------------------
+// 블랙 폰
+std::vector<glm::vec3> B_Pawn1Vertices;
+std::vector<glm::vec2> B_Pawn1UVs;
+std::vector<glm::vec3> B_Pawn1UVsNormals;
+
+std::vector<glm::vec3> B_Pawn2Vertices;
+std::vector<glm::vec2> B_Pawn2UVs;
+std::vector<glm::vec3> B_Pawn2UVsNormals;
+
+std::vector<glm::vec3> B_Pawn3Vertices;
+std::vector<glm::vec2> B_Pawn3UVs;
+std::vector<glm::vec3> B_Pawn3UVsNormals;
+
+std::vector<glm::vec3> B_Pawn4Vertices;
+std::vector<glm::vec2> B_Pawn4UVs;
+std::vector<glm::vec3> B_Pawn4UVsNormals;
+
+std::vector<glm::vec3> B_Pawn5Vertices;
+std::vector<glm::vec2> B_Pawn5UVs;
+std::vector<glm::vec3> B_Pawn5UVsNormals;
+
+std::vector<glm::vec3> B_Pawn6Vertices;
+std::vector<glm::vec2> B_Pawn6UVs;
+std::vector<glm::vec3> B_Pawn6UVsNormals;
+
+std::vector<glm::vec3> B_Pawn7Vertices;
+std::vector<glm::vec2> B_Pawn7UVs;
+std::vector<glm::vec3> B_Pawn7UVsNormals;
+
+std::vector<glm::vec3> B_Pawn8Vertices;
+std::vector<glm::vec2> B_Pawn8UVs;
+std::vector<glm::vec3> B_Pawn8UVsNormals;
+
+// 블랙 비숍
+std::vector<glm::vec3> B_Bishop1Vertices;
+std::vector<glm::vec2> B_Bishop1UVs;
+std::vector<glm::vec3> B_Bishop1UVsNormals;
+
+std::vector<glm::vec3> B_Bishop2Vertices;
+std::vector<glm::vec2> B_Bishop2UVs;
+std::vector<glm::vec3> B_Bishop2UVsNormals;
+
+// 블랙 나이트
+std::vector<glm::vec3> B_Knight1Vertices;
+std::vector<glm::vec2> B_Knight1UVs;
+std::vector<glm::vec3> B_Knight1UVsNormals;
+
+std::vector<glm::vec3> B_Knight2Vertices;
+std::vector<glm::vec2> B_Knight2UVs;
+std::vector<glm::vec3> B_Knight2UVsNormals;
+
+// 블랙 룩
+std::vector<glm::vec3> B_Rook1Vertices;
+std::vector<glm::vec2> B_Rook1UVs;
+std::vector<glm::vec3> B_Rook1UVsNormals;
+
+std::vector<glm::vec3> B_Rook2Vertices;
+std::vector<glm::vec2> B_Rook2UVs;
+std::vector<glm::vec3> B_Rook2UVsNormals;
+
+// 블랙 퀸
+std::vector<glm::vec3> B_QueenVertices;
+std::vector<glm::vec2> B_QueenUVs;
+std::vector<glm::vec3> B_QueenUVsNormals;
+
+// 블랙 킹
+std::vector<glm::vec3> B_KingVertices;
+std::vector<glm::vec2> B_KingUVs;
+std::vector<glm::vec3> B_KingUVsNormals;
+
+
 void Renderer::CreateVertexBufferObjects()
 {
 
@@ -382,17 +379,28 @@ void Renderer::CreateVertexBufferObjects()
 	bool W_Queen = loadOBJ("Chess_Object\\Queen.obj", W_QueenVertices, W_QueenUVs, W_QueenUVsNormals);
 	bool W_King = loadOBJ("Chess_Object\\King.obj", W_KingVertices, W_KingUVs, W_KingUVsNormals);
 
+	bool B_Pawn1 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn1Vertices, B_Pawn1UVs, B_Pawn1UVsNormals);
+	bool B_Pawn2 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn2Vertices, B_Pawn2UVs, B_Pawn2UVsNormals);
+	bool B_Pawn3 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn3Vertices, B_Pawn3UVs, B_Pawn3UVsNormals);
+	bool B_Pawn4 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn4Vertices, B_Pawn4UVs, B_Pawn4UVsNormals);
+	bool B_Pawn5 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn5Vertices, B_Pawn5UVs, B_Pawn5UVsNormals);
+	bool B_Pawn6 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn6Vertices, B_Pawn6UVs, B_Pawn6UVsNormals);
+	bool B_Pawn7 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn7Vertices, B_Pawn7UVs, B_Pawn7UVsNormals);
+	bool B_Pawn8 = loadOBJ("Chess_Object\\Pawn.obj", B_Pawn8Vertices, B_Pawn8UVs, B_Pawn8UVsNormals);
+	bool B_Bishop1 = loadOBJ("Chess_Object\\Bishop.obj", B_Bishop1Vertices, B_Bishop1UVs, B_Bishop1UVsNormals);
+	bool B_Bishop2 = loadOBJ("Chess_Object\\Bishop.obj", B_Bishop2Vertices, B_Bishop2UVs, B_Bishop2UVsNormals);
+	bool B_Knight1 = loadOBJ("Chess_Object\\Knight.obj", B_Knight1Vertices, B_Knight1UVs, B_Knight1UVsNormals);
+	bool B_Knight2 = loadOBJ("Chess_Object\\Knight.obj", B_Knight2Vertices, B_Knight2UVs, B_Knight2UVsNormals);
+	bool B_Rook1 = loadOBJ("Chess_Object\\Rook.obj", B_Rook1Vertices, B_Rook1UVs, B_Rook1UVsNormals);
+	bool B_Rook2 = loadOBJ("Chess_Object\\Rook.obj", B_Rook2Vertices, B_Rook2UVs, B_Rook2UVsNormals);
+	bool B_Queen = loadOBJ("Chess_Object\\Queen.obj", B_QueenVertices, B_QueenUVs, B_QueenUVsNormals);
+	bool B_King = loadOBJ("Chess_Object\\King.obj", B_KingVertices, B_KingUVs, B_KingUVsNormals);
 
 
 	// 가로세로높이 라인
 	glGenBuffers(1, &m_CenterCrossLineVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_CenterCrossLineVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterCrossLinePos), CenterCrossLinePos, GL_STATIC_DRAW);
-
-	// 바닥
-	glGenBuffers(1, &m_FloorVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_FloorVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Floor), Floor, GL_STATIC_DRAW);
 
 	// 체스판
 	glGenBuffers(1, &m_ChessboardVBO);
@@ -521,6 +529,80 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, W_KingUVsNormals.size() * sizeof(glm::vec3), &W_KingUVsNormals[0], GL_STATIC_DRAW);
 
 
+	// --------------------------------------------------------------블랙 진영
+	// 블랙 폰
+	glGenBuffers(1, &m_B_Pawn1VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn1VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn1Vertices.size() * sizeof(glm::vec3), &B_Pawn1Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn2VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn2VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn2Vertices.size() * sizeof(glm::vec3), &B_Pawn2Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn3VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn3VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn3Vertices.size() * sizeof(glm::vec3), &B_Pawn3Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn4VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn4VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn4Vertices.size() * sizeof(glm::vec3), &B_Pawn4Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn5VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn5VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn5Vertices.size() * sizeof(glm::vec3), &B_Pawn5Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn6VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn6VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn6Vertices.size() * sizeof(glm::vec3), &B_Pawn6Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn7VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn7VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn7Vertices.size() * sizeof(glm::vec3), &B_Pawn7Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Pawn8VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn8VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Pawn8Vertices.size() * sizeof(glm::vec3), &B_Pawn8Vertices[0], GL_STATIC_DRAW);
+
+
+	// 블랙 비숍
+	glGenBuffers(1, &m_B_Bishop1VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop1VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Bishop1Vertices.size() * sizeof(glm::vec3), &B_Bishop1Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Bishop2VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop2VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Bishop2Vertices.size() * sizeof(glm::vec3), &B_Bishop2Vertices[0], GL_STATIC_DRAW);
+
+
+	// 블랙 나이트
+	glGenBuffers(1, &m_B_Knight1VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight1VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Knight1Vertices.size() * sizeof(glm::vec3), &B_Knight1Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Knight2VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight2VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Knight2Vertices.size() * sizeof(glm::vec3), &B_Knight2Vertices[0], GL_STATIC_DRAW);
+
+	// 블랙 룩
+	glGenBuffers(1, &m_B_Rook1VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook1VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Rook1Vertices.size() * sizeof(glm::vec3), &B_Rook1Vertices[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &m_B_Rook2VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook2VBO);
+	glBufferData(GL_ARRAY_BUFFER, B_Rook2Vertices.size() * sizeof(glm::vec3), &B_Rook2Vertices[0], GL_STATIC_DRAW);
+
+	// 블랙 퀸
+	glGenBuffers(1, &m_B_QueenVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_QueenVBO);
+	glBufferData(GL_ARRAY_BUFFER, B_QueenVertices.size() * sizeof(glm::vec3), &B_QueenVertices[0], GL_STATIC_DRAW);
+
+
+	// 블랙 킹
+	glGenBuffers(1, &m_B_KingVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_KingVBO);
+	glBufferData(GL_ARRAY_BUFFER, B_KingVertices.size() * sizeof(glm::vec3), &B_KingVertices[0], GL_STATIC_DRAW);
+
 }
 
 void Renderer::DrawParticle() //문제 1번
@@ -529,7 +611,7 @@ void Renderer::DrawParticle() //문제 1번
 
 //전역변수
 
-float CameraXRadians = 70.f;		// 카메라 공전 회전각
+float CameraXRadians = 90.f;		// 카메라 바라보는 각도
 float CameraYRadians = 0.f;
 float TurnChangeRadians = 0.f;
 
@@ -555,7 +637,7 @@ void Renderer::DrawParticle2()
 	unsigned int UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
 	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(UnitVector));
 
-	// --------------------------------------------------카메라 변환--------------------------------------------ㄴ
+	// --------------------------------------------------카메라 변환--------------------------------------------
 	glm::mat4 CameraTraslation(1.f);		// 카메라 최종 변환
 
 	glm::mat4 CameraTranslateMatrix(1.0f);	// 카메라 이동 변환	: 카메라의 위치 초기화
@@ -605,7 +687,7 @@ void Renderer::DrawParticle2()
 	unsigned int lightColorLocation = glGetUniformLocation(program, "lightColor"); //--- lightColor 값 전달: (1.0, 1.0, 1.0) 백색
 	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);		//조명 색깔
 	unsigned int viewPosLocation = glGetUniformLocation(program, "viewPos"); //--- viewPos 값 전달: 카메라 위치
-	glUniform3f(viewPosLocation, 10.0, 110.0, 10.0);		//카메라 위치
+	glUniform3f(viewPosLocation, 0.0, 0.0, 0.0);		//카메라 위치
 
 
 
@@ -903,7 +985,270 @@ void Renderer::DrawParticle2()
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
 
+	//----------------------------------------------------블랙 체스말 모델링 변환----------------------------------
 
+
+	// 블랙 룩1	삼각형 6070개
+	glm::mat4 B_Rook1Translation(1.f);		// 모델링 변환
+
+	B_Rook1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook1Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook1VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	texUloc = glGetUniformLocation(program, "u_Texture");
+	glUniform1f(texUloc, 0);
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindTexture(GL_TEXTURE_2D, m_BlackTexture);
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+
+
+	// 블랙 나이트1
+	glm::mat4 B_Knight1Translation(1.f);		// 모델링 변환
+
+	B_Knight1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight1Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight1VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+
+
+	// 블랙 비숍1
+	glm::mat4 B_Bishop1Translation(1.f);		// 모델링 변환
+
+	B_Bishop1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop1Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop1VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+
+
+	// 블랙 퀸	삼각형 6838
+	glm::mat4 B_QueenTranslation(1.f);		// 모델링 변환
+
+	B_QueenTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_QueenTranslation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_QueenVBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
+
+
+	// 블랙 킹	삼각형 5084
+	glm::mat4 B_KingTranslation(1.f);		// 모델링 변환
+
+	B_KingTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_KingTranslation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_KingVBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
+
+
+	// 블랙 비숍2
+	glm::mat4 B_Bishop2Translation(1.f);		// 모델링 변환
+
+	B_Bishop2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop2Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop2VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+
+
+	// 블랙 나이트2
+	glm::mat4 B_Knight2Translation(1.f);		// 모델링 변환
+
+	B_Knight2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight2Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight2VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+
+
+	// 블랙 룩2	삼각형 6070개
+	glm::mat4 B_Rook2Translation(1.f);		// 모델링 변환
+
+	B_Rook2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 8));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook2Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook2VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+
+
+	// 블랙 폰1
+	glm::mat4 B_Pawn1Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn1Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn1VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰2
+	glm::mat4 B_Pawn2Translation(1.f);		// 블랙 나이트1 모델링 변환
+
+	B_Pawn2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn2Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn2VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰3
+	glm::mat4 B_Pawn3Translation(1.f);		// 블랙 나이트1 모델링 변환
+
+	B_Pawn3Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn3Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn3VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+
+	// 블랙 폰4
+	glm::mat4 B_Pawn4Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn4Translation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn4Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn4VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰5
+	glm::mat4 B_Pawn5Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn5Translation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn5Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn5VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰6
+	glm::mat4 B_Pawn6Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn6Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn6Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn6VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰7
+	glm::mat4 B_Pawn7Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn7Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn7Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn7VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
+
+
+	// 블랙 폰8
+	glm::mat4 B_Pawn8Translation(1.f);		// 블랙 폰1 모델링 변환
+
+	B_Pawn8Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 7));
+
+	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn8Translation));
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn8VBO);
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5번째 인자: stride. 바이트 단위
+
+	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// 사각형-6개의 점. 폰의 폴리곤 개수
 
 
 
@@ -914,62 +1259,6 @@ void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
 	*newX = x * 2.f / m_WindowSizeX;
 	*newY = y * 2.f / m_WindowSizeY;
 }
-
-void Renderer::Class0310()
-{
-
-}
-
-//bool Load_Object(const char* path) {
-//	vertexIndices.clear();
-//	uvIndices.clear();
-//	normalIndices.clear();
-//	vertices.clear();
-//	uvs.clear();
-//	normals.clear();
-//
-//	std::ifstream in(path);
-//	if (!in) {
-//		std::cerr << path << "파일 못찾음";
-//		exit(1);
-//	}
-//
-//	//vector<char> lineHeader(istream_iterator<char>{in}, {});
-//
-//	while (in) {
-//		string lineHeader;
-//		in >> lineHeader;
-//		if (lineHeader == "v") {
-//			glm::vec3 vertex;
-//			in >> vertex.x >> vertex.y >> vertex.z;
-//			vertices.push_back(vertex);
-//		}
-//		else if (lineHeader == "vt") {
-//			glm::vec2 uv;
-//			in >> uv.x >> uv.y;
-//			uvs.push_back(uv);
-//		}
-//		else if (lineHeader == "vn") {
-//			glm::vec3 normal;
-//			in >> normal.x >> normal.y >> normal.z;
-//			normals.push_back(normal);
-//		}
-//		else if (lineHeader == "f") {
-//			char a;
-//			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-//
-//			for (int i = 0; i < 3; i++)
-//			{
-//				in >> vertexIndex[i] >> a >> uvIndex[i] >> a >> normalIndex[i];
-//				vertexIndices.push_back(vertexIndex[i] - 1);
-//				uvIndices.push_back(uvIndex[i] - 1);
-//				normalIndices.push_back(normalIndex[i] - 1);
-//			}
-//		}
-//	}
-//
-//	return true;
-//}
 
 bool loadOBJ(
 	const char* path,
