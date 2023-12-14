@@ -71,22 +71,35 @@ void MouseInput(int button, int state, int x, int y)
 
 		if (boardX >= 0 && boardX < 8 && boardY >= 0 && boardY < 8)
 		{
-			if (g_Renderer->GetChessPieceAt(boardY, boardX).piece != ChessPiece::Empty)
+			if (!isPieceSelected)
 			{
-				//select piece
-				selectedPiece = g_Renderer->GetChessPieceAt(boardX, boardY);
-				isPieceSelected = true;
-				selectedX = boardX;
-				selectedY = boardY;
+				//select
+				if (g_Renderer->GetChessPieceAt(boardY, boardX).piece != ChessPiece::Empty)
+				{
+					selectedPiece = g_Renderer->GetChessPieceAt(boardY, boardX);
+					isPieceSelected = true;
+					selectedX = boardX;
+					selectedY = boardY;
 
-				//debug - print selected piece
-				std::cout << "selected: " << boardX << "," << boardY << "," << endl;
+					//debug - print selected piece
+					std::cout << "selected: " << boardX << "," << boardY << "," << endl;
+				}
+				else
+				{
+					//debug - print if selected piece is empty
+					std::cout << "selected: " << boardX << "," << boardY << ", is empty" << endl;
+				}
 			}
 			else
 			{
-				//debug - print if selected piece is empty
-				std::cout << "selected: " << boardX << "," << boardY << ", is empty" << endl;
+				//place
+				g_Renderer->SetChessPieceAt(selectedY, selectedX, { ChessPiece::Empty, PieceColor::None });
+				g_Renderer->SetChessPieceAt(boardY, boardX, selectedPiece);
+
+				isPieceSelected = false;
+				std::cout << "moved to: " << boardX << "," << boardY << std::endl;
 			}
+			
 
 		}
 	}
