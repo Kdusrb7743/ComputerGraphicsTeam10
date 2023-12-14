@@ -1,12 +1,4 @@
-﻿/*
-Copyright 2022 Lee Taek Hee (Tech University of Korea)
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the What The Hell License. Do it plz.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY.
-*/
+﻿
 
 #include "stdafx.h"
 #include <iostream>
@@ -26,12 +18,8 @@ void RenderScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	// Renderer Test
-	//g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
-	//g_Renderer->Class0310_Rendering();
-	//g_Renderer->DrawParticle();			// ¹®Á¦ 14
-	g_Renderer->DrawParticle2();		// ¹®Á¦ 16
+		
+	g_Renderer->DrawParticle2();		
 	glutSwapBuffers();
 }
 
@@ -40,7 +28,7 @@ void Idle(void)
 	RenderScene();
 }
 
-// Àü¿ªº¯¼ö
+
 bool IsTurnOver = false;
 
 bool IsPathClear(int startX, int startY, int endX, int endY, ChessPiece piece, PieceColor color) {
@@ -256,7 +244,7 @@ void MouseInput(int button, int state, int x, int y)
 	}
 }
 
-// Renderer.cpp Àü¿ªº¯¼ö ºÒ·¯¿À±â
+// Renderer.cpp
 extern float TurnChangeRadians;
 
 
@@ -282,7 +270,7 @@ void KeyInput(unsigned char key, int x, int y)
 void TurnOverCameraRotationAnimation(int value) {
 	TurnChangeRadians += 2.0f;
 
-	if (((int)TurnChangeRadians % 180) != 0) {	//180±îÁö º¯°æ
+	if (((int)TurnChangeRadians % 180) != 0) {	//180
 		glutTimerFunc(4, TurnOverCameraRotationAnimation, 1);
 		isCameraRotated = !isCameraRotated;
 	}
@@ -296,19 +284,19 @@ void TurnOverCameraRotationAnimation(int value) {
 void SpecialKeyInput(int key, int x, int y)
 {
 	switch (key) {
-	case GLUT_KEY_LEFT:	// ¿ÞÂÊ ¹æÇâÅ°
+	case GLUT_KEY_LEFT:
 
 		break;
 
-	case GLUT_KEY_RIGHT: // ¿À¸¥ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_RIGHT: 
 
 		break;
 
-	case GLUT_KEY_UP:	// À§ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_UP:
 
 		break;
 
-	case GLUT_KEY_DOWN:	// ¾Æ·¡ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_DOWN:
 
 		break;
 	}
