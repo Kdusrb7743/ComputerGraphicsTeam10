@@ -319,7 +319,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(400, 0);
 	glutInitWindowSize(1000, 1000);
-	glutCreateWindow("Game Software Engineering KPU");
+	glutCreateWindow("ChessGL");
 
 	glewInit();
 	if (glewIsSupported("GL_VERSION_3_0"))
