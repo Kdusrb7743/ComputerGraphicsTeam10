@@ -39,6 +39,45 @@ void Idle(void)
 	RenderScene();
 }
 
+bool IsValidMovePawn(int startX, int startY, int endX, int endY, PieceColor color) {
+	int direction = (color == PieceColor::White) ? -1 : 1;
+
+	//move one tile
+	if (startY == endY && endX == startX + direction) {
+		return true;
+	}
+	//move two tiles
+	if (startY == endY && startX == (color == PieceColor::White ? 6 : 1) && endX == startX + 2 * direction) {
+		return true;
+	}
+
+	//attack for pawn
+	if (abs(endY - startY) == 1 && endX == startX + direction) {
+		return true;
+	}
+	return false;
+}
+
+bool IsValidMoveRook(int startX, int startY, int endX, int endY) {
+	return startX == endX || startY == endY;
+}
+
+bool IsValidMoveKnight(int startX, int startY, int endX, int endY) {
+	return (abs(startX - endX) == 2 && abs(startY - endY) == 1) || (abs(startX - endX) == 1 && abs(startY - endY) == 2);
+}
+
+bool IsValidMoveBishop(int startX, int startY, int endX, int endY) {
+	return abs(startX - endX) == abs(startY - endY);
+}
+
+bool IsValidMoveQueen(int startX, int startY, int endX, int endY) {
+	return IsValidMoveRook(startX, startY, endX, endY) || IsValidMoveBishop(startX, startY, endX, endY);
+}
+
+bool IsValidMoveKing(int startX, int startY, int endX, int endY) {
+	return abs(startX - endX) <= 1 && abs(startY - endY) <= 1;
+}
+
 ChessBoardSquare selectedPiece;
 bool isPieceSelected = false;
 int selectedX, selectedY;
@@ -92,12 +131,43 @@ void MouseInput(int button, int state, int x, int y)
 			}
 			else
 			{
+				//check if it's valid move
+				bool isValidMove = false;
+				switch (selectedPiece.piece) {
+				case ChessPiece::Pawn:
+					isValidMove = IsValidMovePawn(selectedY, selectedX, boardY, boardX, selectedPiece.color);
+					break;
+				case ChessPiece::Rook:
+					isValidMove = IsValidMoveRook(selectedY, selectedX, boardY, boardX);
+					break;
+				case ChessPiece::Knight:
+					isValidMove = IsValidMoveKnight(selectedY, selectedX, boardY, boardX);
+					break;
+				case ChessPiece::Bishop:
+					isValidMove = IsValidMoveBishop(selectedY, selectedX, boardY, boardX);
+					break;
+				case ChessPiece::Queen:
+					isValidMove = IsValidMoveQueen(selectedY, selectedX, boardY, boardX);
+					break;
+				case ChessPiece::King:
+					isValidMove = IsValidMoveKing(selectedY, selectedX, boardY, boardX);
+					break;
+				default:
+					break;
+				}
 				//place
-				g_Renderer->SetChessPieceAt(selectedY, selectedX, { ChessPiece::Empty, PieceColor::None });
-				g_Renderer->SetChessPieceAt(boardY, boardX, selectedPiece);
-
+				if (isValidMove)
+				{
+					g_Renderer->SetChessPieceAt(selectedY, selectedX, { ChessPiece::Empty, PieceColor::None });
+					g_Renderer->SetChessPieceAt(boardY, boardX, selectedPiece);
+					//debug - print moved message
+					std::cout << "moved to: " << boardX << "," << boardY << std::endl;
+				}
+				else
+				{
+					std::cout << "invalid move, try again" << endl;
+				}
 				isPieceSelected = false;
-				std::cout << "moved to: " << boardX << "," << boardY << std::endl;
 			}
 			
 
