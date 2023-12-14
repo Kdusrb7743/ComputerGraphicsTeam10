@@ -71,14 +71,23 @@ void MouseInput(int button, int state, int x, int y)
 
 		if (boardX >= 0 && boardX < 8 && boardY >= 0 && boardY < 8)
 		{
-			if (g_Renderer->GetChessPieceAt(boardX, boardY).piece != ChessPiece::Empty)
+			if (g_Renderer->GetChessPieceAt(boardY, boardX).piece != ChessPiece::Empty)
 			{
 				//select piece
 				selectedPiece = g_Renderer->GetChessPieceAt(boardX, boardY);
 				isPieceSelected = true;
 				selectedX = boardX;
 				selectedY = boardY;
+
+				//debug - print selected piece
+				std::cout << "selected: " << boardX << "," << boardY << "," << endl;
 			}
+			else
+			{
+				//debug - print if selected piece is empty
+				std::cout << "selected: " << boardX << "," << boardY << ", is empty" << endl;
+			}
+
 		}
 	}
 }
@@ -168,6 +177,7 @@ int main(int argc, char **argv)
 		std::cout << "Renderer could not be initialized.. \n";
 	}
 
+	g_Renderer->InitializeChessBoard();
 	glutDisplayFunc(RenderScene);
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(KeyInput);
