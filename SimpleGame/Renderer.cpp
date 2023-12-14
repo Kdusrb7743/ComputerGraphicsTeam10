@@ -16,6 +16,42 @@ bool loadOBJ(
 	std::vector<glm::vec3>&
 );
 
+void Renderer::InitializeChessBoard()
+{
+	//hard-coding pieces
+	//chess board init. starting with no pieces
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			board[i][j] = { ChessPiece::Empty, PieceColor::None };
+		}
+	}
+
+	//pawn(black, white)
+	for (int i = 0; i < 8; i++) {
+		board[1][i] = { ChessPiece::Pawn, PieceColor::Black };
+		board[6][i] = { ChessPiece::Pawn, PieceColor::White };
+	}
+
+	//other black pieces
+	board[0][0] = { ChessPiece::Rook, PieceColor::Black };
+	board[0][7] = { ChessPiece::Rook, PieceColor::Black };
+	board[0][1] = { ChessPiece::Knight, PieceColor::Black };
+	board[0][6] = { ChessPiece::Knight, PieceColor::Black };
+	board[0][2] = { ChessPiece::Bishop, PieceColor::Black };
+	board[0][5] = { ChessPiece::Bishop, PieceColor::Black };
+	board[0][3] = { ChessPiece::Queen, PieceColor::Black };
+	board[0][4] = { ChessPiece::King, PieceColor::Black };
+
+	//other white pieces
+	board[7][0] = { ChessPiece::Rook, PieceColor::White };
+	board[7][7] = { ChessPiece::Rook, PieceColor::White };
+	board[7][1] = { ChessPiece::Knight, PieceColor::White };
+	board[7][6] = { ChessPiece::Knight, PieceColor::White };
+	board[7][2] = { ChessPiece::Bishop, PieceColor::White };
+	board[7][5] = { ChessPiece::Bishop, PieceColor::White };
+	board[7][3] = { ChessPiece::Queen, PieceColor::White };
+	board[7][4] = { ChessPiece::King, PieceColor::White };
+}
 
 
 Renderer::Renderer(int windowSizeX, int windowSizeY)

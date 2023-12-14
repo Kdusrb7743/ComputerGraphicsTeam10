@@ -11,6 +11,22 @@
 #include <gl/glm/ext.hpp>
 #include <gl/glm/gtc/matrix_transform.hpp>
 
+enum class ChessPiece
+{
+	Empty, Pawn, Knight, Bishop, Rook, Queen, King
+};
+
+enum class PieceColor
+{
+	None, White, Black
+};
+
+struct ChessBoardSquare
+{
+	ChessPiece piece;
+	PieceColor color;
+};
+
 class Renderer
 {
 public:
@@ -23,6 +39,7 @@ public:
 
 	void DrawParticle();								//그리기
 	void DrawParticle2();								//그리기
+	void InitializeChessBoard();
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
@@ -32,6 +49,8 @@ private:
 	GLuint CreatePngTexture(char* filePath, GLuint samplingMethod);
 	void GetGLPosition(float x, float y, float *newX, float *newY);
 	void Class0310();
+
+	ChessBoardSquare board[8][8];
 
 
 	// 내부 원소
