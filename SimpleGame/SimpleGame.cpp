@@ -40,6 +40,9 @@ void Idle(void)
 	RenderScene();
 }
 
+// Àü¿ªº¯¼ö
+bool IsTurnOver = false;
+
 bool IsPathClear(int startX, int startY, int endX, int endY, ChessPiece piece, PieceColor color) {
 	int deltaX = endX - startX;
 	int deltaY = endY - startY;
@@ -238,6 +241,8 @@ void MouseInput(int button, int state, int x, int y)
 					g_Renderer->SetChessPieceAt(boardY, boardX, selectedPiece);
 					//debug - print moved message
 					std::cout << "moved to: " << boardX << "," << boardY << std::endl;
+					IsTurnOver = false;
+					TurnOverCameraRotationAnimation(1);
 				}
 				else
 				{
@@ -254,8 +259,7 @@ void MouseInput(int button, int state, int x, int y)
 // Renderer.cpp Àü¿ªº¯¼ö ºÒ·¯¿À±â
 extern float TurnChangeRadians;
 
-// Àü¿ªº¯¼ö
-bool IsTurnOver = false;
+
 
 void KeyInput(unsigned char key, int x, int y)
 {
