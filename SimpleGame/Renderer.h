@@ -42,6 +42,8 @@ public:
 	void InitializeChessBoard();
 	ChessBoardSquare GetChessPieceAt(int x, int y);
 	void SetChessPieceAt(int x, int y, ChessBoardSquare piece);
+	GLuint Renderer::GetVBO(ChessPiece piece, PieceColor color);
+	int Renderer::GetVertexCount(ChessPiece piece);
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);

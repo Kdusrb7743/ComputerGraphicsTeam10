@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include "Renderer.h"
 #include "LoadPng.h"
@@ -76,7 +76,7 @@ void Renderer::SetChessPieceAt(int x, int y, ChessBoardSquare piece)
 Renderer::Renderer(int windowSizeX, int windowSizeY)
 {
 	Initialize(windowSizeX, windowSizeY);
-	//Class0310();			// ¿©±â¼­ ¹ÙÀÎµå ¹öÆÛ ÇØÁØ´Ù.
+	//Class0310();			// Â¿Â©Â±Ã¢Â¼Â­ Â¹Ã™Ã€ÃÂµÃ¥ Â¹Ã¶Ã†Ã› Ã‡Ã˜ÃÃ˜Â´Ã™.
 }
 
 
@@ -95,7 +95,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	
 	//Create VBOs
 	CreateVertexBufferObjects();
-	//CreateParticleVBO(int numParticleCount = 1000);	//±³¼ö´ÔÀº ¿©±â¼­ ÇØÁÜ
+	//CreateParticleVBO(int numParticleCount = 1000);	//Â±Â³Â¼Ã¶Â´Ã”Ã€Âº Â¿Â©Â±Ã¢Â¼Â­ Ã‡Ã˜ÃÃœ
 
 	/*
 	if (m_SolidRectShader > 0 && m_VBORect > 0)
@@ -104,7 +104,7 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	}
 	*/
 
-	// ÅØ½ºÃ³ ·Îµå
+	// Ã…Ã˜Â½ÂºÃƒÂ³ Â·ÃÂµÃ¥
 	m_ChessboardTexture = CreatePngTexture("./Texture/Chessboard_Base_Color.png", GL_NEAREST);
 	m_WhiteTexture = CreatePngTexture("./Texture/White.png", GL_NEAREST);
 	m_BlackTexture = CreatePngTexture("./Texture/Black.png", GL_NEAREST);
@@ -141,7 +141,7 @@ bool Renderer::IsInitialized()
 
 void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum ShaderType)
 {
-	//½¦ÀÌ´õ ¿ÀºêÁ§Æ® »ı¼º
+	//Â½Â¦Ã€ÃŒÂ´Ãµ Â¿Ã€ÂºÃªÃÂ§Ã†Â® Â»Ã½Â¼Âº
 	GLuint ShaderObj = glCreateShader(ShaderType);
 
 	if (ShaderObj == 0) {
@@ -152,25 +152,25 @@ void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum S
 	p[0] = pShaderText;
 	GLint Lengths[1];
 	Lengths[0] = strlen(pShaderText);
-	//½¦ÀÌ´õ ÄÚµå¸¦ ½¦ÀÌ´õ ¿ÀºêÁ§Æ®¿¡ ÇÒ´ç
+	//Â½Â¦Ã€ÃŒÂ´Ãµ Ã„ÃšÂµÃ¥Â¸Â¦ Â½Â¦Ã€ÃŒÂ´Ãµ Â¿Ã€ÂºÃªÃÂ§Ã†Â®Â¿Â¡ Ã‡Ã’Â´Ã§
 	glShaderSource(ShaderObj, 1, p, Lengths);
 
-	//ÇÒ´çµÈ ½¦ÀÌ´õ ÄÚµå¸¦ ÄÄÆÄÀÏ
+	//Ã‡Ã’Â´Ã§ÂµÃˆ Â½Â¦Ã€ÃŒÂ´Ãµ Ã„ÃšÂµÃ¥Â¸Â¦ Ã„Ã„Ã†Ã„Ã€Ã
 	glCompileShader(ShaderObj);
 
 	GLint success;
-	// ShaderObj °¡ ¼º°øÀûÀ¸·Î ÄÄÆÄÀÏ µÇ¾ú´ÂÁö È®ÀÎ
+	// ShaderObj Â°Â¡ Â¼ÂºÂ°Ã¸Ã€Ã»Ã€Â¸Â·Ã Ã„Ã„Ã†Ã„Ã€Ã ÂµÃ‡Â¾ÃºÂ´Ã‚ÃÃ¶ ÃˆÂ®Ã€Ã
 	glGetShaderiv(ShaderObj, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		GLchar InfoLog[1024];
 
-		//OpenGL ÀÇ shader log µ¥ÀÌÅÍ¸¦ °¡Á®¿È
+		//OpenGL Ã€Ã‡ shader log ÂµÂ¥Ã€ÃŒÃ…ÃÂ¸Â¦ Â°Â¡ÃÂ®Â¿Ãˆ
 		glGetShaderInfoLog(ShaderObj, 1024, NULL, InfoLog);
 		fprintf(stderr, "Error compiling shader type %d: '%s'\n", ShaderType, InfoLog);
 		printf("%s \n", pShaderText);
 	}
 
-	// ShaderProgram ¿¡ attach!!
+	// ShaderProgram Â¿Â¡ attach!!
 	glAttachShader(ShaderProgram, ShaderObj);
 }
 
@@ -193,43 +193,43 @@ bool Renderer::ReadFile(char* filename, std::string *target)
 
 GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 {
-	GLuint ShaderProgram = glCreateProgram(); //ºó ½¦ÀÌ´õ ÇÁ·Î±×·¥ »ı¼º
+	GLuint ShaderProgram = glCreateProgram(); //ÂºÃ³ Â½Â¦Ã€ÃŒÂ´Ãµ Ã‡ÃÂ·ÃÂ±Ã—Â·Â¥ Â»Ã½Â¼Âº
 
-	if (ShaderProgram == 0) { //½¦ÀÌ´õ ÇÁ·Î±×·¥ÀÌ ¸¸µé¾îÁ³´ÂÁö È®ÀÎ
+	if (ShaderProgram == 0) { //Â½Â¦Ã€ÃŒÂ´Ãµ Ã‡ÃÂ·ÃÂ±Ã—Â·Â¥Ã€ÃŒ Â¸Â¸ÂµÃ©Â¾Ã®ÃÂ³Â´Ã‚ÃÃ¶ ÃˆÂ®Ã€Ã
 		fprintf(stderr, "Error creating shader program\n");
 	}
 
 	std::string vs, fs;
 
-	//shader.vs °¡ vs ¾ÈÀ¸·Î ·ÎµùµÊ
+	//shader.vs Â°Â¡ vs Â¾ÃˆÃ€Â¸Â·Ã Â·ÃÂµÃ¹ÂµÃŠ
 	if (!ReadFile(filenameVS, &vs)) {
 		printf("Error compiling vertex shader\n");
 		return -1;
 	};
 
-	//shader.fs °¡ fs ¾ÈÀ¸·Î ·ÎµùµÊ
+	//shader.fs Â°Â¡ fs Â¾ÃˆÃ€Â¸Â·Ã Â·ÃÂµÃ¹ÂµÃŠ
 	if (!ReadFile(filenameFS, &fs)) {
 		printf("Error compiling fragment shader\n");
 		return -1;
 	};
 
-	// ShaderProgram ¿¡ vs.c_str() ¹öÅØ½º ½¦ÀÌ´õ¸¦ ÄÄÆÄÀÏÇÑ °á°ú¸¦ attachÇÔ
+	// ShaderProgram Â¿Â¡ vs.c_str() Â¹Ã¶Ã…Ã˜Â½Âº Â½Â¦Ã€ÃŒÂ´ÃµÂ¸Â¦ Ã„Ã„Ã†Ã„Ã€ÃÃ‡Ã‘ Â°Ã¡Â°ÃºÂ¸Â¦ attachÃ‡Ã”
 	AddShader(ShaderProgram, vs.c_str(), GL_VERTEX_SHADER);
 
-	// ShaderProgram ¿¡ fs.c_str() ÇÁ·¹±×¸ÕÆ® ½¦ÀÌ´õ¸¦ ÄÄÆÄÀÏÇÑ °á°ú¸¦ attachÇÔ
+	// ShaderProgram Â¿Â¡ fs.c_str() Ã‡ÃÂ·Â¹Â±Ã—Â¸Ã•Ã†Â® Â½Â¦Ã€ÃŒÂ´ÃµÂ¸Â¦ Ã„Ã„Ã†Ã„Ã€ÃÃ‡Ã‘ Â°Ã¡Â°ÃºÂ¸Â¦ attachÃ‡Ã”
 	AddShader(ShaderProgram, fs.c_str(), GL_FRAGMENT_SHADER);
 
 	GLint Success = 0;
 	GLchar ErrorLog[1024] = { 0 };
 
-	//Attach ¿Ï·áµÈ shaderProgram À» ¸µÅ·ÇÔ
+	//Attach Â¿ÃÂ·Ã¡ÂµÃˆ shaderProgram Ã€Â» Â¸ÂµÃ…Â·Ã‡Ã”
 	glLinkProgram(ShaderProgram);
 
-	//¸µÅ©°¡ ¼º°øÇß´ÂÁö È®ÀÎ
+	//Â¸ÂµÃ…Â©Â°Â¡ Â¼ÂºÂ°Ã¸Ã‡ÃŸÂ´Ã‚ÃÃ¶ ÃˆÂ®Ã€Ã
 	glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &Success);
 
 	if (Success == 0) {
-		// shader program ·Î±×¸¦ ¹Ş¾Æ¿È
+		// shader program Â·ÃÂ±Ã—Â¸Â¦ Â¹ÃÂ¾Ã†Â¿Ãˆ
 		glGetProgramInfoLog(ShaderProgram, sizeof(ErrorLog), NULL, ErrorLog);
 		std::cout << filenameVS << ", " << filenameFS << " Error linking shader program\n" << ErrorLog;
 		return -1;
@@ -250,25 +250,25 @@ GLuint Renderer::CompileShaders(char* filenameVS, char* filenameFS)
 }
 
 
-float CenterCrossLinePos[] =		//°¡·Î¼¼·Î ±íÀÌ
+float CenterCrossLinePos[] =		//Â°Â¡Â·ÃÂ¼Â¼Â·Ã Â±Ã­Ã€ÃŒ
 {
-	0.0f,  5.0f, 0.0f,	0.0, 1.0, 0.0,		// ¼¼·Î
+	0.0f,  5.0f, 0.0f,	0.0, 1.0, 0.0,		// Â¼Â¼Â·Ã
 	0.0f, -5.0f, 0.0f,	0.0, 1.0, 0.0,
-	5.0f,  0.0f, 0.0f,	1.0, 0.0, 0.0,		// °¡·Î
+	5.0f,  0.0f, 0.0f,	1.0, 0.0, 0.0,		// Â°Â¡Â·Ã
    -5.0f,  0.0f, 0.0f,	1.0, 0.0, 0.0,
-	0.0f,  0.0f, 5.0f,  0.0, 0.0, 1.0,		// ±íÀÌ
+	0.0f,  0.0f, 5.0f,  0.0, 0.0, 1.0,		// Â±Ã­Ã€ÃŒ
 	0.0f,  0.0f, -5.0f, 0.0, 0.0, 1.0,
 
 };
 
 
-// Ã¼½ºÆÇ
+// ÃƒÂ¼Â½ÂºÃ†Ã‡
 std::vector<glm::vec3> ChessboardVertices;
 std::vector<glm::vec2> ChessboardUVs;
 std::vector<glm::vec3> ChessboardUVsNormals;
 
-//---------------------------------------È­ÀÌÆ® Ã¼½º¸»-----------------------------
-// È­ÀÌÆ® Æù
+//---------------------------------------ÃˆÂ­Ã€ÃŒÃ†Â® ÃƒÂ¼Â½ÂºÂ¸Â»-----------------------------
+// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹
 std::vector<glm::vec3> W_Pawn1Vertices;
 std::vector<glm::vec2> W_Pawn1UVs;
 std::vector<glm::vec3> W_Pawn1UVsNormals;
@@ -301,7 +301,7 @@ std::vector<glm::vec3> W_Pawn8Vertices;
 std::vector<glm::vec2> W_Pawn8UVs;
 std::vector<glm::vec3> W_Pawn8UVsNormals;
 
-// È­ÀÌÆ® ºñ¼ó
+// ÃˆÂ­Ã€ÃŒÃ†Â® ÂºÃ±Â¼Ã³
 std::vector<glm::vec3> W_Bishop1Vertices;
 std::vector<glm::vec2> W_Bishop1UVs;
 std::vector<glm::vec3> W_Bishop1UVsNormals;
@@ -310,7 +310,7 @@ std::vector<glm::vec3> W_Bishop2Vertices;
 std::vector<glm::vec2> W_Bishop2UVs;
 std::vector<glm::vec3> W_Bishop2UVsNormals;
 
-// È­ÀÌÆ® ³ªÀÌÆ®
+// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®
 std::vector<glm::vec3> W_Knight1Vertices;
 std::vector<glm::vec2> W_Knight1UVs;
 std::vector<glm::vec3> W_Knight1UVsNormals;
@@ -319,7 +319,7 @@ std::vector<glm::vec3> W_Knight2Vertices;
 std::vector<glm::vec2> W_Knight2UVs;
 std::vector<glm::vec3> W_Knight2UVsNormals;
 
-// È­ÀÌÆ® ·è
+// ÃˆÂ­Ã€ÃŒÃ†Â® Â·Ã¨
 std::vector<glm::vec3> W_Rook1Vertices;
 std::vector<glm::vec2> W_Rook1UVs;
 std::vector<glm::vec3> W_Rook1UVsNormals;
@@ -328,18 +328,18 @@ std::vector<glm::vec3> W_Rook2Vertices;
 std::vector<glm::vec2> W_Rook2UVs;
 std::vector<glm::vec3> W_Rook2UVsNormals;
 
-// È­ÀÌÆ® Äı
+// ÃˆÂ­Ã€ÃŒÃ†Â® Ã„Ã½
 std::vector<glm::vec3> W_QueenVertices;
 std::vector<glm::vec2> W_QueenUVs;
 std::vector<glm::vec3> W_QueenUVsNormals;
 
-// È­ÀÌÆ® Å·
+// ÃˆÂ­Ã€ÃŒÃ†Â® Ã…Â·
 std::vector<glm::vec3> W_KingVertices;
 std::vector<glm::vec2> W_KingUVs;
 std::vector<glm::vec3> W_KingUVsNormals;
 
-//---------------------------------------ºí·¢ Ã¼½º¸»-----------------------------
-// ºí·¢ Æù
+//---------------------------------------ÂºÃ­Â·Â¢ ÃƒÂ¼Â½ÂºÂ¸Â»-----------------------------
+// ÂºÃ­Â·Â¢ Ã†Ã¹
 std::vector<glm::vec3> B_Pawn1Vertices;
 std::vector<glm::vec2> B_Pawn1UVs;
 std::vector<glm::vec3> B_Pawn1UVsNormals;
@@ -372,7 +372,7 @@ std::vector<glm::vec3> B_Pawn8Vertices;
 std::vector<glm::vec2> B_Pawn8UVs;
 std::vector<glm::vec3> B_Pawn8UVsNormals;
 
-// ºí·¢ ºñ¼ó
+// ÂºÃ­Â·Â¢ ÂºÃ±Â¼Ã³
 std::vector<glm::vec3> B_Bishop1Vertices;
 std::vector<glm::vec2> B_Bishop1UVs;
 std::vector<glm::vec3> B_Bishop1UVsNormals;
@@ -381,7 +381,7 @@ std::vector<glm::vec3> B_Bishop2Vertices;
 std::vector<glm::vec2> B_Bishop2UVs;
 std::vector<glm::vec3> B_Bishop2UVsNormals;
 
-// ºí·¢ ³ªÀÌÆ®
+// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®
 std::vector<glm::vec3> B_Knight1Vertices;
 std::vector<glm::vec2> B_Knight1UVs;
 std::vector<glm::vec3> B_Knight1UVsNormals;
@@ -390,7 +390,7 @@ std::vector<glm::vec3> B_Knight2Vertices;
 std::vector<glm::vec2> B_Knight2UVs;
 std::vector<glm::vec3> B_Knight2UVsNormals;
 
-// ºí·¢ ·è
+// ÂºÃ­Â·Â¢ Â·Ã¨
 std::vector<glm::vec3> B_Rook1Vertices;
 std::vector<glm::vec2> B_Rook1UVs;
 std::vector<glm::vec3> B_Rook1UVsNormals;
@@ -399,12 +399,12 @@ std::vector<glm::vec3> B_Rook2Vertices;
 std::vector<glm::vec2> B_Rook2UVs;
 std::vector<glm::vec3> B_Rook2UVsNormals;
 
-// ºí·¢ Äı
+// ÂºÃ­Â·Â¢ Ã„Ã½
 std::vector<glm::vec3> B_QueenVertices;
 std::vector<glm::vec2> B_QueenUVs;
 std::vector<glm::vec3> B_QueenUVsNormals;
 
-// ºí·¢ Å·
+// ÂºÃ­Â·Â¢ Ã…Â·
 std::vector<glm::vec3> B_KingVertices;
 std::vector<glm::vec2> B_KingUVs;
 std::vector<glm::vec3> B_KingUVsNormals;
@@ -452,29 +452,29 @@ void Renderer::CreateVertexBufferObjects()
 	bool B_King = loadOBJ("Chess_Object\\King.obj", B_KingVertices, B_KingUVs, B_KingUVsNormals);
 
 
-	// °¡·Î¼¼·Î³ôÀÌ ¶óÀÎ
+	// Â°Â¡Â·ÃÂ¼Â¼Â·ÃÂ³Ã´Ã€ÃŒ Â¶Ã³Ã€Ã
 	glGenBuffers(1, &m_CenterCrossLineVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_CenterCrossLineVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(CenterCrossLinePos), CenterCrossLinePos, GL_STATIC_DRAW);
 
-	// Ã¼½ºÆÇ
+	// ÃƒÂ¼Â½ÂºÃ†Ã‡
 	glGenBuffers(1, &m_ChessboardVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardVBO);
 	glBufferData(GL_ARRAY_BUFFER, ChessboardVertices.size() * sizeof(glm::vec3), &ChessboardVertices[0], GL_STATIC_DRAW);
 
-	// Ã¼½ºÆÇ ÅØ½ºÃ³ Àû¿ë
+	// ÃƒÂ¼Â½ÂºÃ†Ã‡ Ã…Ã˜Â½ÂºÃƒÂ³ Ã€Ã»Â¿Ã«
 	glGenBuffers(1, &m_ChessboardUVVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardUVVBO);
 	glBufferData(GL_ARRAY_BUFFER, ChessboardUVs.size() * sizeof(glm::vec2), &ChessboardUVs[0], GL_STATIC_DRAW);
 
-	// Ã¼½ºÆÇ ³ë¸»
+	// ÃƒÂ¼Â½ÂºÃ†Ã‡ Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_ChessboardNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, ChessboardUVsNormals.size() * sizeof(glm::vec3), &ChessboardUVsNormals[0], GL_STATIC_DRAW);
 
 
-	// È­ÀÌÆ® Áø¿µ
-	// È­ÀÌÆ® Æù
+	// ÃˆÂ­Ã€ÃŒÃ†Â® ÃÃ¸Â¿Âµ
+	// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹
 	glGenBuffers(1, &m_W_Pawn1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn1VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Pawn1Vertices.size() * sizeof(glm::vec3), &W_Pawn1Vertices[0], GL_STATIC_DRAW);
@@ -507,17 +507,17 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn8VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Pawn8Vertices.size() * sizeof(glm::vec3), &W_Pawn8Vertices[0], GL_STATIC_DRAW);
 
-	//Æù UV
+	//Ã†Ã¹ UV
 	glGenBuffers(1, &m_PawnUVVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_PawnUVVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Pawn1UVs.size() * sizeof(glm::vec2), &W_Pawn1UVs[0], GL_STATIC_DRAW);
 
-	//Æù ³ë¸»
+	//Ã†Ã¹ Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_PawnNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Pawn1UVsNormals.size() * sizeof(glm::vec3), &W_Pawn1UVsNormals[0], GL_STATIC_DRAW);
 
-	// È­ÀÌÆ® ºñ¼ó
+	// ÃˆÂ­Ã€ÃŒÃ†Â® ÂºÃ±Â¼Ã³
 	glGenBuffers(1, &m_W_Bishop1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop1VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Bishop1Vertices.size() * sizeof(glm::vec3), &W_Bishop1Vertices[0], GL_STATIC_DRAW);
@@ -526,13 +526,13 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Bishop2Vertices.size() * sizeof(glm::vec3), &W_Bishop2Vertices[0], GL_STATIC_DRAW);
 
-	// ºñ¼ó ³ë¸»
+	// ÂºÃ±Â¼Ã³ Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_BishopNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Bishop1UVsNormals.size() * sizeof(glm::vec3), &W_Bishop1UVsNormals[0], GL_STATIC_DRAW);
 
 
-	// È­ÀÌÆ® ³ªÀÌÆ®
+	// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®
 	glGenBuffers(1, &m_W_Knight1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight1VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Knight1Vertices.size() * sizeof(glm::vec3), &W_Knight1Vertices[0], GL_STATIC_DRAW);
@@ -541,13 +541,13 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Knight2Vertices.size() * sizeof(glm::vec3), &W_Knight2Vertices[0], GL_STATIC_DRAW);
 
-	// ³ªÀÌÆ® ³ë¸»
+	// Â³ÂªÃ€ÃŒÃ†Â® Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_KnightNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Knight1UVsNormals.size() * sizeof(glm::vec3), &W_Knight1UVsNormals[0], GL_STATIC_DRAW);
 
 
-	// È­ÀÌÆ® ·è
+	// ÃˆÂ­Ã€ÃŒÃ†Â® Â·Ã¨
 	glGenBuffers(1, &m_W_Rook1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook1VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Rook1Vertices.size() * sizeof(glm::vec3), &W_Rook1Vertices[0], GL_STATIC_DRAW);
@@ -556,36 +556,36 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook2VBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Rook2Vertices.size() * sizeof(glm::vec3), &W_Rook2Vertices[0], GL_STATIC_DRAW);
 
-	// ·è ³ë¸»
+	// Â·Ã¨ Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_RookNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_Rook1UVsNormals.size() * sizeof(glm::vec3), &W_Rook1UVsNormals[0], GL_STATIC_DRAW);
 
 
-	// È­ÀÌÆ® Äı
+	// ÃˆÂ­Ã€ÃŒÃ†Â® Ã„Ã½
 	glGenBuffers(1, &m_W_QueenVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_QueenVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_QueenVertices.size() * sizeof(glm::vec3), &W_QueenVertices[0], GL_STATIC_DRAW);
 
-	// Äı ³ë¸»
+	// Ã„Ã½ Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_QueenNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_QueenUVsNormals.size() * sizeof(glm::vec3), &W_QueenUVsNormals[0], GL_STATIC_DRAW);
 
 
-	// È­ÀÌÆ® Å·
+	// ÃˆÂ­Ã€ÃŒÃ†Â® Ã…Â·
 	glGenBuffers(1, &m_W_KingVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_W_KingVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_KingVertices.size() * sizeof(glm::vec3), &W_KingVertices[0], GL_STATIC_DRAW);
 
-	// Å· ³ë¸»
+	// Ã…Â· Â³Ã«Â¸Â»
 	glGenBuffers(1, &m_KingNormalVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
 	glBufferData(GL_ARRAY_BUFFER, W_KingUVsNormals.size() * sizeof(glm::vec3), &W_KingUVsNormals[0], GL_STATIC_DRAW);
 
 
-	// --------------------------------------------------------------ºí·¢ Áø¿µ
-	// ºí·¢ Æù
+	// --------------------------------------------------------------ÂºÃ­Â·Â¢ ÃÃ¸Â¿Âµ
+	// ÂºÃ­Â·Â¢ Ã†Ã¹
 	glGenBuffers(1, &m_B_Pawn1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn1VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Pawn1Vertices.size() * sizeof(glm::vec3), &B_Pawn1Vertices[0], GL_STATIC_DRAW);
@@ -619,7 +619,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, B_Pawn8Vertices.size() * sizeof(glm::vec3), &B_Pawn8Vertices[0], GL_STATIC_DRAW);
 
 
-	// ºí·¢ ºñ¼ó
+	// ÂºÃ­Â·Â¢ ÂºÃ±Â¼Ã³
 	glGenBuffers(1, &m_B_Bishop1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop1VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Bishop1Vertices.size() * sizeof(glm::vec3), &B_Bishop1Vertices[0], GL_STATIC_DRAW);
@@ -629,7 +629,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBufferData(GL_ARRAY_BUFFER, B_Bishop2Vertices.size() * sizeof(glm::vec3), &B_Bishop2Vertices[0], GL_STATIC_DRAW);
 
 
-	// ºí·¢ ³ªÀÌÆ®
+	// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®
 	glGenBuffers(1, &m_B_Knight1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight1VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Knight1Vertices.size() * sizeof(glm::vec3), &B_Knight1Vertices[0], GL_STATIC_DRAW);
@@ -638,7 +638,7 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight2VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Knight2Vertices.size() * sizeof(glm::vec3), &B_Knight2Vertices[0], GL_STATIC_DRAW);
 
-	// ºí·¢ ·è
+	// ÂºÃ­Â·Â¢ Â·Ã¨
 	glGenBuffers(1, &m_B_Rook1VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook1VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Rook1Vertices.size() * sizeof(glm::vec3), &B_Rook1Vertices[0], GL_STATIC_DRAW);
@@ -647,26 +647,26 @@ void Renderer::CreateVertexBufferObjects()
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook2VBO);
 	glBufferData(GL_ARRAY_BUFFER, B_Rook2Vertices.size() * sizeof(glm::vec3), &B_Rook2Vertices[0], GL_STATIC_DRAW);
 
-	// ºí·¢ Äı
+	// ÂºÃ­Â·Â¢ Ã„Ã½
 	glGenBuffers(1, &m_B_QueenVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_QueenVBO);
 	glBufferData(GL_ARRAY_BUFFER, B_QueenVertices.size() * sizeof(glm::vec3), &B_QueenVertices[0], GL_STATIC_DRAW);
 
 
-	// ºí·¢ Å·
+	// ÂºÃ­Â·Â¢ Ã…Â·
 	glGenBuffers(1, &m_B_KingVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, m_B_KingVBO);
 	glBufferData(GL_ARRAY_BUFFER, B_KingVertices.size() * sizeof(glm::vec3), &B_KingVertices[0], GL_STATIC_DRAW);
 
 }
 
-void Renderer::DrawParticle() //¹®Á¦ 1¹ø
+void Renderer::DrawParticle() //Â¹Â®ÃÂ¦ 1Â¹Ã¸
 {
 }
 
-//Àü¿ªº¯¼ö
+//Ã€Ã¼Â¿ÂªÂºÂ¯Â¼Ã¶
 
-float CameraXRadians = 90.f;		// Ä«¸Ş¶ó ¹Ù¶óº¸´Â °¢µµ
+float CameraXRadians = 90.f;		// Ã„Â«Â¸ÃÂ¶Ã³ Â¹Ã™Â¶Ã³ÂºÂ¸Â´Ã‚ Â°Â¢ÂµÂµ
 float CameraYRadians = 0.f;
 float TurnChangeRadians = 0.f;
 
@@ -685,24 +685,24 @@ void Renderer::DrawParticle2()
 	//glFrontFace(GL_CW);
 
 
-	// ´ÜÀ§ º¤ÅÍ
+	// Â´ÃœÃ€Â§ ÂºÂ¤Ã…Ã
 	glm::mat4 UnitVector(1.f);
 
-	//¸ğµ¨¸µ º¯È¯ ÃÊ±âÈ­
+	//Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯ ÃƒÃŠÂ±Ã¢ÃˆÂ­
 	unsigned int UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
 	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(UnitVector));
 
-	// --------------------------------------------------Ä«¸Ş¶ó º¯È¯--------------------------------------------
-	glm::mat4 CameraTraslation(1.f);		// Ä«¸Ş¶ó ÃÖÁ¾ º¯È¯
+	// --------------------------------------------------Ã„Â«Â¸ÃÂ¶Ã³ ÂºÂ¯ÃˆÂ¯--------------------------------------------
+	glm::mat4 CameraTraslation(1.f);		// Ã„Â«Â¸ÃÂ¶Ã³ ÃƒÃ–ÃÂ¾ ÂºÂ¯ÃˆÂ¯
 
-	glm::mat4 CameraTranslateMatrix(1.0f);	// Ä«¸Ş¶ó ÀÌµ¿ º¯È¯	: Ä«¸Ş¶óÀÇ À§Ä¡ ÃÊ±âÈ­
-	glm::mat4 CameraRotationMatrix(1.0f);	// Ä«¸Ş¶ó È¸Àü º¯È¯	: Ä«¸Ş¶óÀÇ À§Ä¡ ÃÊ±âÈ­
-	glm::mat4 CameraTurnChangeMatrix(1.0f);	// Ä«¸Ş¶ó È¸Àü º¯È¯ : ÃÊ±âÈ­µÈ Ä«¸Ş¶ó¸¦ °¢ ÅÏ¿¡ ¸Â°Ô È¸Àü
+	glm::mat4 CameraTranslateMatrix(1.0f);	// Ã„Â«Â¸ÃÂ¶Ã³ Ã€ÃŒÂµÂ¿ ÂºÂ¯ÃˆÂ¯	: Ã„Â«Â¸ÃÂ¶Ã³Ã€Ã‡ Ã€Â§Ã„Â¡ ÃƒÃŠÂ±Ã¢ÃˆÂ­
+	glm::mat4 CameraRotationMatrix(1.0f);	// Ã„Â«Â¸ÃÂ¶Ã³ ÃˆÂ¸Ã€Ã¼ ÂºÂ¯ÃˆÂ¯	: Ã„Â«Â¸ÃÂ¶Ã³Ã€Ã‡ Ã€Â§Ã„Â¡ ÃƒÃŠÂ±Ã¢ÃˆÂ­
+	glm::mat4 CameraTurnChangeMatrix(1.0f);	// Ã„Â«Â¸ÃÂ¶Ã³ ÃˆÂ¸Ã€Ã¼ ÂºÂ¯ÃˆÂ¯ : ÃƒÃŠÂ±Ã¢ÃˆÂ­ÂµÃˆ Ã„Â«Â¸ÃÂ¶Ã³Â¸Â¦ Â°Â¢ Ã…ÃÂ¿Â¡ Â¸Ã‚Â°Ã” ÃˆÂ¸Ã€Ã¼
 
-	CameraRotationMatrix = glm::rotate(UnitVector, glm::radians(CameraXRadians), glm::vec3(1.0f, 0.0f, 0.0f));	//xÃàÀ¸·Î 
+	CameraRotationMatrix = glm::rotate(UnitVector, glm::radians(CameraXRadians), glm::vec3(1.0f, 0.0f, 0.0f));	//xÃƒÃ Ã€Â¸Â·Ã 
 	CameraTranslateMatrix = glm::translate(UnitVector, glm::vec3(-1.62, 0.0, -1.62));
 
-	CameraTurnChangeMatrix = glm::rotate(UnitVector, glm::radians(TurnChangeRadians), glm::vec3(0.0f, 1.0f, 0.0f)); //yÃàÈ¸Àü
+	CameraTurnChangeMatrix = glm::rotate(UnitVector, glm::radians(TurnChangeRadians), glm::vec3(0.0f, 1.0f, 0.0f)); //yÃƒÃ ÃˆÂ¸Ã€Ã¼
 
 	CameraTraslation = CameraRotationMatrix * CameraTurnChangeMatrix * CameraTranslateMatrix;
 
@@ -711,45 +711,45 @@ void Renderer::DrawParticle2()
 
 
 
-	//----------------------------------------------------------¿ø±ÙÅõ¿µ º¯È¯-----------------------------------
+	//----------------------------------------------------------Â¿Ã¸Â±Ã™Ã…ÃµÂ¿Âµ ÂºÂ¯ÃˆÂ¯-----------------------------------
 
 	glm::mat4 projection(1.0f);
 
-	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f); //--- Åõ¿µ °ø°£ ¼³Á¤: fovy, aspect, near, far
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));		//--- °ø°£À» zÃà ÀÌµ¿
+	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f); //--- Ã…ÃµÂ¿Âµ Â°Ã¸Â°Â£ Â¼Â³ÃÂ¤: fovy, aspect, near, far
+	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));		//--- Â°Ã¸Â°Â£Ã€Â» zÃƒÃ  Ã€ÃŒÂµÂ¿
 
 	unsigned int ProjectionLocation = glGetUniformLocation(program, "projectionTransform");
 	glUniformMatrix4fv(ProjectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 
-	//°¡·Î¼¼·Î ¶óÀÎ
+	//Â°Â¡Â·ÃÂ¼Â¼Â·Ã Â¶Ã³Ã€Ã
 	int posLoc0 = glGetAttribLocation(program, "a_Position");
 	glEnableVertexAttribArray(posLoc0);
 	int ColorLoc0 = glGetAttribLocation(program, "a_Color");
 	glEnableVertexAttribArray(ColorLoc0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_CenterCrossLineVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 	glVertexAttribPointer(ColorLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (GLvoid*)(sizeof(float) * 3));
 
 	glDrawArrays(GL_LINES, 0, 6);
 
 	
-	//-----------------------------------------------Á¶¸í----------------------------------
-	//Á¶¸í À¯´ÏÆû
-	unsigned int lightPosLocation = glGetUniformLocation(program, "lightPos");	   //--- lightPos °ª Àü´Ş: (0.0, 0.0, 5.0);
-	glUniform3f(lightPosLocation, 5.0, 4.0, 5.0);		//Á¶¸í À§Ä¡
-	unsigned int lightColorLocation = glGetUniformLocation(program, "lightColor"); //--- lightColor °ª Àü´Ş: (1.0, 1.0, 1.0) ¹é»ö
-	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);		//Á¶¸í »ö±ò
-	unsigned int viewPosLocation = glGetUniformLocation(program, "viewPos"); //--- viewPos °ª Àü´Ş: Ä«¸Ş¶ó À§Ä¡
-	glUniform3f(viewPosLocation, 0.0, 0.0, 0.0);		//Ä«¸Ş¶ó À§Ä¡
+	//-----------------------------------------------ÃÂ¶Â¸Ã­----------------------------------
+	//ÃÂ¶Â¸Ã­ Ã€Â¯Â´ÃÃ†Ã»
+	unsigned int lightPosLocation = glGetUniformLocation(program, "lightPos");	   //--- lightPos Â°Âª Ã€Ã¼Â´Ã: (0.0, 0.0, 5.0);
+	glUniform3f(lightPosLocation, 5.0, 4.0, 5.0);		//ÃÂ¶Â¸Ã­ Ã€Â§Ã„Â¡
+	unsigned int lightColorLocation = glGetUniformLocation(program, "lightColor"); //--- lightColor Â°Âª Ã€Ã¼Â´Ã: (1.0, 1.0, 1.0) Â¹Ã©Â»Ã¶
+	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);		//ÃÂ¶Â¸Ã­ Â»Ã¶Â±Ã²
+	unsigned int viewPosLocation = glGetUniformLocation(program, "viewPos"); //--- viewPos Â°Âª Ã€Ã¼Â´Ã: Ã„Â«Â¸ÃÂ¶Ã³ Ã€Â§Ã„Â¡
+	glUniform3f(viewPosLocation, 0.0, 0.0, 0.0);		//Ã„Â«Â¸ÃÂ¶Ã³ Ã€Â§Ã„Â¡
 
 
 
-	// ----------------------------------------------¿ÀºêÁ§Æ® À§Ä¡º¯È¯-----------------------------------------
+	// ----------------------------------------------Â¿Ã€ÂºÃªÃÂ§Ã†Â® Ã€Â§Ã„Â¡ÂºÂ¯ÃˆÂ¯-----------------------------------------
 
-	// Ã¼½ºÆÇ
-	glm::mat4 W_ChessboardTranslation(1.f);		// Ã¼½ºÆÇ ¸ğµ¨¸µ º¯È¯
+	// ÃƒÂ¼Â½ÂºÃ†Ã‡
+	glm::mat4 W_ChessboardTranslation(1.f);		// ÃƒÂ¼Â½ÂºÃ†Ã‡ Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
 	W_ChessboardTranslation = glm::translate(UnitVector, glm::vec3(0.0, 0.0, 0.0));
 
@@ -762,11 +762,11 @@ void Renderer::DrawParticle2()
 	glEnableVertexAttribArray(uvLoc);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardUVVBO);
-	glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	glVertexAttribPointer(uvLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 	glBindBuffer(GL_ARRAY_BUFFER, m_ChessboardNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
 	int texUloc = glGetUniformLocation(program, "u_Texture");
 	glUniform1f(texUloc, 0);
@@ -777,536 +777,599 @@ void Renderer::DrawParticle2()
 	glDrawArrays(GL_TRIANGLES, 0, 3 * 576);
 
 
-	// È­ÀÌÆ® ·è1	»ï°¢Çü 6070°³
-	glm::mat4 W_Rook1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Â·Ã¨1	Â»Ã¯Â°Â¢Ã‡Ã¼ 6070Â°Â³
+	//glm::mat4 W_Rook1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Rook1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 1));
+	//W_Rook1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Rook1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Rook1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	texUloc = glGetUniformLocation(program, "u_Texture");
-	glUniform1f(texUloc, 0);
-	glActiveTexture(GL_TEXTURE0);
+	//texUloc = glGetUniformLocation(program, "u_Texture");
+	//glUniform1f(texUloc, 0);
+	//glActiveTexture(GL_TEXTURE0);
 
-	glBindTexture(GL_TEXTURE_2D, m_WhiteTexture);
+	//glBindTexture(GL_TEXTURE_2D, m_WhiteTexture);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
 
-	// È­ÀÌÆ® ³ªÀÌÆ®1
-	glm::mat4 W_Knight1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®1
+	//glm::mat4 W_Knight1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Knight1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 1));
+	//W_Knight1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Knight1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Knight1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
 
-	// È­ÀÌÆ® ºñ¼ó1
-	glm::mat4 W_Bishop1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® ÂºÃ±Â¼Ã³1
+	//glm::mat4 W_Bishop1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Bishop1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 1));
+	//W_Bishop1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Bishop1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Bishop1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
 
-	// È­ÀÌÆ® Äı	»ï°¢Çü 6838
-	glm::mat4 W_QueenTranslation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã„Ã½	Â»Ã¯Â°Â¢Ã‡Ã¼ 6838
+	//glm::mat4 W_QueenTranslation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_QueenTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 1));
+	//W_QueenTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_QueenTranslation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_QueenTranslation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_QueenVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_QueenVBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
 
 
-	// È­ÀÌÆ® Å·	»ï°¢Çü 5084
-	glm::mat4 W_KingTranslation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã…Â·	Â»Ã¯Â°Â¢Ã‡Ã¼ 5084
+	//glm::mat4 W_KingTranslation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_KingTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 1));
+	//W_KingTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_KingTranslation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_KingTranslation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_KingVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_KingVBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
 
 
-	// È­ÀÌÆ® ºñ¼ó2
-	glm::mat4 W_Bishop2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® ÂºÃ±Â¼Ã³2
+	//glm::mat4 W_Bishop2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Bishop2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 1));
+	//W_Bishop2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Bishop2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Bishop2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Bishop2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
 
-	// È­ÀÌÆ® ³ªÀÌÆ®2
-	glm::mat4 W_Knight2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®2
+	//glm::mat4 W_Knight2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Knight2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 1));
+	//W_Knight2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Knight2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Knight2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Knight2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
 
-	// È­ÀÌÆ® ·è2	»ï°¢Çü 6070°³
-	glm::mat4 W_Rook2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Â·Ã¨2	Â»Ã¯Â°Â¢Ã‡Ã¼ 6070Â°Â³
+	//glm::mat4 W_Rook2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Rook2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 1));
+	//W_Rook2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 1));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Rook2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Rook2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Rook2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
 
-	// È­ÀÌÆ® Æù1
-	glm::mat4 W_Pawn1Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1
+	//glm::mat4 W_Pawn1Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 2));
+	//W_Pawn1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù2
-	glm::mat4 W_Pawn2Translation(1.f);		// È­ÀÌÆ® ³ªÀÌÆ®1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹2
+	//glm::mat4 W_Pawn2Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 2));
+	//W_Pawn2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù3
-	glm::mat4 W_Pawn3Translation(1.f);		// È­ÀÌÆ® ³ªÀÌÆ®1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹3
+	//glm::mat4 W_Pawn3Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Â³ÂªÃ€ÃŒÃ†Â®1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn3Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 2));
+	//W_Pawn3Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn3Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn3Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn3VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn3VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
 
-	// È­ÀÌÆ® Æù4
-	glm::mat4 W_Pawn4Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹4
+	//glm::mat4 W_Pawn4Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn4Translation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 2));
+	//W_Pawn4Translation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn4Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn4Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn4VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn4VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù5
-	glm::mat4 W_Pawn5Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹5
+	//glm::mat4 W_Pawn5Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn5Translation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 2));
+	//W_Pawn5Translation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn5Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn5Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn5VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn5VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù6
-	glm::mat4 W_Pawn6Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹6
+	//glm::mat4 W_Pawn6Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn6Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 2));
+	//W_Pawn6Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn6Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn6Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn6VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn6VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù7
-	glm::mat4 W_Pawn7Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹7
+	//glm::mat4 W_Pawn7Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn7Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 2));
+	//W_Pawn7Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn7Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn7Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn7VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn7VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// È­ÀÌÆ® Æù8
-	glm::mat4 W_Pawn8Translation(1.f);		// È­ÀÌÆ® Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹8
+	//glm::mat4 W_Pawn8Translation(1.f);		// ÃˆÂ­Ã€ÃŒÃ†Â® Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	W_Pawn8Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 2));
+	//W_Pawn8Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 2));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn8Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(W_Pawn8Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn8VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_W_Pawn8VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	//----------------------------------------------------ºí·¢ Ã¼½º¸» ¸ğµ¨¸µ º¯È¯----------------------------------
+	////----------------------------------------------------ÂºÃ­Â·Â¢ ÃƒÂ¼Â½ÂºÂ¸Â» Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯----------------------------------
 
 
-	// ºí·¢ ·è1	»ï°¢Çü 6070°³
-	glm::mat4 B_Rook1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Â·Ã¨1	Â»Ã¯Â°Â¢Ã‡Ã¼ 6070Â°Â³
+	//glm::mat4 B_Rook1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Rook1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 8));
+	//B_Rook1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	texUloc = glGetUniformLocation(program, "u_Texture");
-	glUniform1f(texUloc, 0);
-	glActiveTexture(GL_TEXTURE0);
+	//texUloc = glGetUniformLocation(program, "u_Texture");
+	//glUniform1f(texUloc, 0);
+	//glActiveTexture(GL_TEXTURE0);
 
-	glBindTexture(GL_TEXTURE_2D, m_BlackTexture);
+	//glBindTexture(GL_TEXTURE_2D, m_BlackTexture);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
 
-	// ºí·¢ ³ªÀÌÆ®1
-	glm::mat4 B_Knight1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®1
+	//glm::mat4 B_Knight1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Knight1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 8));
+	//B_Knight1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
 
-	// ºí·¢ ºñ¼ó1
-	glm::mat4 B_Bishop1Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ ÂºÃ±Â¼Ã³1
+	//glm::mat4 B_Bishop1Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Bishop1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 8));
+	//B_Bishop1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
 
-	// ºí·¢ Äı	»ï°¢Çü 6838
-	glm::mat4 B_QueenTranslation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã„Ã½	Â»Ã¯Â°Â¢Ã‡Ã¼ 6838
+	//glm::mat4 B_QueenTranslation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_QueenTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 8));
+	//B_QueenTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_QueenTranslation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_QueenTranslation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_QueenVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_QueenVBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_QueenNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6838);
 
 
-	// ºí·¢ Å·	»ï°¢Çü 5084
-	glm::mat4 B_KingTranslation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã…Â·	Â»Ã¯Â°Â¢Ã‡Ã¼ 5084
+	//glm::mat4 B_KingTranslation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_KingTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 8));
+	//B_KingTranslation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_KingTranslation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_KingTranslation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_KingVBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_KingVBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KingNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5084);
 
 
-	// ºí·¢ ºñ¼ó2
-	glm::mat4 B_Bishop2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ ÂºÃ±Â¼Ã³2
+	//glm::mat4 B_Bishop2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Bishop2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 8));
+	//B_Bishop2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Bishop2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Bishop2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_BishopNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6776);
 
 
-	// ºí·¢ ³ªÀÌÆ®2
-	glm::mat4 B_Knight2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®2
+	//glm::mat4 B_Knight2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Knight2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 8));
+	//B_Knight2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Knight2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Knight2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_KnightNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 2438);
 
 
-	// ºí·¢ ·è2	»ï°¢Çü 6070°³
-	glm::mat4 B_Rook2Translation(1.f);		// ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Â·Ã¨2	Â»Ã¯Â°Â¢Ã‡Ã¼ 6070Â°Â³
+	//glm::mat4 B_Rook2Translation(1.f);		// Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Rook2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 8));
+	//B_Rook2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 8));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Rook2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Rook2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_RookNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 6070);
 
 
-	// ºí·¢ Æù1
-	glm::mat4 B_Pawn1Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹1
+	//glm::mat4 B_Pawn1Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 7));
+	//B_Pawn1Translation = glm::translate(UnitVector, glm::vec3(0.36 * 1, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn1Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn1Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn1VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn1VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù2
-	glm::mat4 B_Pawn2Translation(1.f);		// ºí·¢ ³ªÀÌÆ®1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹2
+	//glm::mat4 B_Pawn2Translation(1.f);		// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 7));
+	//B_Pawn2Translation = glm::translate(UnitVector, glm::vec3(0.36 * 2, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn2Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn2Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn2VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn2VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù3
-	glm::mat4 B_Pawn3Translation(1.f);		// ºí·¢ ³ªÀÌÆ®1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹3
+	//glm::mat4 B_Pawn3Translation(1.f);		// ÂºÃ­Â·Â¢ Â³ÂªÃ€ÃŒÃ†Â®1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn3Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 7));
+	//B_Pawn3Translation = glm::translate(UnitVector, glm::vec3(0.36 * 3, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn3Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn3Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn3VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn3VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
 
-	// ºí·¢ Æù4
-	glm::mat4 B_Pawn4Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹4
+	//glm::mat4 B_Pawn4Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn4Translation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 7));
+	//B_Pawn4Translation = glm::translate(UnitVector, glm::vec3(0.36 * 4, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn4Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn4Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn4VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn4VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù5
-	glm::mat4 B_Pawn5Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹5
+	//glm::mat4 B_Pawn5Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn5Translation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 7));
+	//B_Pawn5Translation = glm::translate(UnitVector, glm::vec3(0.36 * 5, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn5Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn5Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn5VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn5VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù6
-	glm::mat4 B_Pawn6Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹6
+	//glm::mat4 B_Pawn6Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn6Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 7));
+	//B_Pawn6Translation = glm::translate(UnitVector, glm::vec3(0.36 * 6, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn6Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn6Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn6VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn6VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù7
-	glm::mat4 B_Pawn7Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹7
+	//glm::mat4 B_Pawn7Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn7Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 7));
+	//B_Pawn7Translation = glm::translate(UnitVector, glm::vec3(0.36 * 7, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn7Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn7Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn7VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn7VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
 
-	// ºí·¢ Æù8
-	glm::mat4 B_Pawn8Translation(1.f);		// ºí·¢ Æù1 ¸ğµ¨¸µ º¯È¯
+	//// ÂºÃ­Â·Â¢ Ã†Ã¹8
+	//glm::mat4 B_Pawn8Translation(1.f);		// ÂºÃ­Â·Â¢ Ã†Ã¹1 Â¸Ã°ÂµÂ¨Â¸Âµ ÂºÂ¯ÃˆÂ¯
 
-	B_Pawn8Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 7));
+	//B_Pawn8Translation = glm::translate(UnitVector, glm::vec3(0.36 * 8, 0.0, 0.36 * 7));
 
-	UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
-	glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn8Translation));
+	//UnitVectorLocation = glGetUniformLocation(program, "modelTransform");
+	//glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(B_Pawn8Translation));
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn8VBO);
-	glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
-	glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
-	glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5¹øÂ° ÀÎÀÚ: stride. ¹ÙÀÌÆ® ´ÜÀ§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_B_Pawn8VBO);
+	//glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
+	//glBindBuffer(GL_ARRAY_BUFFER, m_PawnNormalVBO);
+	//glVertexAttribPointer(NormalLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);  //5Â¹Ã¸Ã‚Â° Ã€ÃÃ€Ãš: stride. Â¹Ã™Ã€ÃŒÃ†Â® Â´ÃœÃ€Â§
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// »ç°¢Çü-6°³ÀÇ Á¡. ÆùÀÇ Æú¸®°ï °³¼ö
+	//glDrawArrays(GL_TRIANGLES, 0, 3 * 5816);		// Â»Ã§Â°Â¢Ã‡Ã¼-6Â°Â³Ã€Ã‡ ÃÂ¡. Ã†Ã¹Ã€Ã‡ Ã†ÃºÂ¸Â®Â°Ã¯ Â°Â³Â¼Ã¶
 
+	for (int x = 0; x < 8; ++x) {
+		for (int y = 0; y < 8; ++y) {
+			ChessBoardSquare square = board[x][y];
 
+			if (square.piece != ChessPiece::Empty) {
+				// select VBO and texture
+				GLuint vbo = GetVBO(square.piece, square.color);
+				GLuint texture = (square.color == PieceColor::White) ? m_WhiteTexture : m_BlackTexture;
+				int vertexCount = GetVertexCount(square.piece);
 
+				// calc piece location
+				float posX = 0.36 * (x+1);
+				float posY = 0.36 * (y+1); // Zì¶•ì´ë¼ê³  ê°€ì •
+
+				// transform matrix
+				glm::mat4 pieceTranslation = glm::translate(glm::mat4(1.0f), glm::vec3(posY, 0.0f, posX));
+
+				// render
+				glUniformMatrix4fv(UnitVectorLocation, 1, GL_FALSE, glm::value_ptr(pieceTranslation));
+				glBindBuffer(GL_ARRAY_BUFFER, vbo);
+				glVertexAttribPointer(posLoc0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+				glBindTexture(GL_TEXTURE_2D, texture);
+				glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+			}
+		}
+	}
+
+}
+
+GLuint Renderer::GetVBO(ChessPiece piece, PieceColor color) {
+	switch (piece) {
+	case ChessPiece::Pawn:
+		return (color == PieceColor::White) ? m_W_Pawn1VBO : m_B_Pawn1VBO;
+	case ChessPiece::Rook:
+		return (color == PieceColor::White) ? m_W_Rook1VBO : m_B_Rook1VBO;
+	case ChessPiece::Bishop:
+		return (color == PieceColor::White) ? m_W_Bishop1VBO : m_B_Bishop1VBO;
+	case ChessPiece::Knight:
+		return (color == PieceColor::White) ? m_W_Knight1VBO : m_B_Knight1VBO;
+	case ChessPiece::Queen:
+		return (color == PieceColor::White) ? m_W_QueenVBO : m_B_QueenVBO;
+	case ChessPiece::King:
+		return (color == PieceColor::White) ? m_W_KingVBO : m_B_KingVBO;
+	default:
+		return -1;
+	}
+}
+
+int Renderer::GetVertexCount(ChessPiece piece) {
+	switch (piece) {
+	case ChessPiece::Pawn:
+		return 5816;
+	case ChessPiece::Rook:
+		return 6070;
+	case ChessPiece::Bishop:
+		return 6776;
+	case ChessPiece::Knight:
+		return 2438;
+	case ChessPiece::Queen:
+		return 6838;
+	case ChessPiece::King:
+		return 5084;
+	default:
+		return 0;
+	}
 }
 
 void Renderer::GetGLPosition(float x, float y, float *newX, float *newY)
@@ -1322,7 +1385,7 @@ bool loadOBJ(
 	std::vector<glm::vec3>& out_normals
 )
 {
-	printf("OBJ ÆÄÀÏ ·ÎµùÁß %s...\n", path);
+	printf("OBJ Ã†Ã„Ã€Ã Â·ÃÂµÃ¹ÃÃŸ %s...\n", path);
 
 	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
 	std::vector<glm::vec3> temp_vertices;
@@ -1331,7 +1394,7 @@ bool loadOBJ(
 
 	FILE* file = fopen(path, "r");
 	if (file == NULL) {
-		printf("ÆÄÀÏ °æ·Î¸¦ È®ÀÎÇÏ¼¼¿ä!\n");
+		printf("Ã†Ã„Ã€Ã Â°Ã¦Â·ÃÂ¸Â¦ ÃˆÂ®Ã€ÃÃ‡ÃÂ¼Â¼Â¿Ã¤!\n");
 		getchar();
 		return false;
 	}
@@ -1340,12 +1403,12 @@ bool loadOBJ(
 
 		char lineHeader[128];
 
-		//Ã¹¹øÂ° ¶óÀÎÀÇ Ã¹¹øÂ° ´Ü¾î¸¦ ÀĞ´Â´Ù
+		//ÃƒÂ¹Â¹Ã¸Ã‚Â° Â¶Ã³Ã€ÃÃ€Ã‡ ÃƒÂ¹Â¹Ã¸Ã‚Â° Â´ÃœÂ¾Ã®Â¸Â¦ Ã€ÃÂ´Ã‚Â´Ã™
 		int res = fscanf(file, "%s", lineHeader);
 		if (res == EOF)
 			break;
 
-		//else : ¶óÀÎÀÇ Çì´õ¸¦ parse
+		//else : Â¶Ã³Ã€ÃÃ€Ã‡ Ã‡Ã¬Â´ÃµÂ¸Â¦ parse
 		if (strcmp(lineHeader, "v") == 0) {
 			glm::vec3 vertex;
 			fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
@@ -1354,7 +1417,7 @@ bool loadOBJ(
 		else if (strcmp(lineHeader, "vt") == 0) {
 			glm::vec2 uv;
 			fscanf(file, "%f %f\n", &uv.x, &uv.y);
-			uv.y = -uv.y; //¿ì¸®°¡ DDS texture¸¸À» ÀÌ¿ëÇÒ °ÍÀÌ¹Ç·Î VÀÇ ÁÂÇ¥¸¦ ¹İ´ë·Î ¹Ù²Ù¾îÁØ´Ù. ¸¸¾à TGA or BMP ·Î´õ¸¦ »ç¿ëÇÏ¸é ÀÌ °ÍÀ» Á¦°ÅÇØ¶ó.
+			uv.y = -uv.y; //Â¿Ã¬Â¸Â®Â°Â¡ DDS textureÂ¸Â¸Ã€Â» Ã€ÃŒÂ¿Ã«Ã‡Ã’ Â°ÃÃ€ÃŒÂ¹Ã‡Â·Ã VÃ€Ã‡ ÃÃ‚Ã‡Â¥Â¸Â¦ Â¹ÃÂ´Ã«Â·Ã Â¹Ã™Â²Ã™Â¾Ã®ÃÃ˜Â´Ã™. Â¸Â¸Â¾Ã  TGA or BMP Â·ÃÂ´ÃµÂ¸Â¦ Â»Ã§Â¿Ã«Ã‡ÃÂ¸Ã© Ã€ÃŒ Â°ÃÃ€Â» ÃÂ¦Â°Ã…Ã‡Ã˜Â¶Ã³.
 			temp_uvs.push_back(uv);
 		}
 		else if (strcmp(lineHeader, "vn") == 0) {
@@ -1367,7 +1430,7 @@ bool loadOBJ(
 			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 			int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 			if (matches != 9) {
-				printf("ÆÄÀÏÀ» ÀĞÀ»¼ö¾ø´Ù.");
+				printf("Ã†Ã„Ã€ÃÃ€Â» Ã€ÃÃ€Â»Â¼Ã¶Â¾Ã¸Â´Ã™.");
 				return false;
 			}
 			vertexIndices.push_back(vertexIndex[0]);
@@ -1381,26 +1444,26 @@ bool loadOBJ(
 			normalIndices.push_back(normalIndex[2]);
 		}
 		else {
-			//³ª¸ÓÁö ¶óÀÎÀ» ¸Ô´Â´Ù.
+			//Â³ÂªÂ¸Ã“ÃÃ¶ Â¶Ã³Ã€ÃÃ€Â» Â¸Ã”Â´Ã‚Â´Ã™.
 			char stupidBuffer[1000];
 			fgets(stupidBuffer, 1000, file);
 		}
 	}
 
-	//°¢ »ï°¢ÇüÀÇ °¢ ²ÀÁöÁ¡
+	//Â°Â¢ Â»Ã¯Â°Â¢Ã‡Ã¼Ã€Ã‡ Â°Â¢ Â²Ã€ÃÃ¶ÃÂ¡
 	for (unsigned int i = 0; i < vertexIndices.size(); i++) {
 
-		//¼Ó¼ºÀÇ ÀÎµ¦½º¸¦ °¡Á®¿Â´Ù
+		//Â¼Ã“Â¼ÂºÃ€Ã‡ Ã€ÃÂµÂ¦Â½ÂºÂ¸Â¦ Â°Â¡ÃÂ®Â¿Ã‚Â´Ã™
 		unsigned int vertexIndex = vertexIndices[i];
 		unsigned int uvIndex = uvIndices[i];
 		unsigned int normalIndex = normalIndices[i];
 
-		//ÀÎµ¦½º¿¡¼­ ¼Ó¼ºÀ» °¡Á®¿Â´Ù
+		//Ã€ÃÂµÂ¦Â½ÂºÂ¿Â¡Â¼Â­ Â¼Ã“Â¼ÂºÃ€Â» Â°Â¡ÃÂ®Â¿Ã‚Â´Ã™
 		glm::vec3 vertex = temp_vertices[vertexIndex - 1];
 		glm::vec2 uv = temp_uvs[uvIndex - 1];
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 
-		//¹öÆÛ¿¡ ¼Ó¼ºÀ» ³Ö´Â´Ù
+		//Â¹Ã¶Ã†Ã›Â¿Â¡ Â¼Ã“Â¼ÂºÃ€Â» Â³Ã–Â´Ã‚Â´Ã™
 		out_vertices.push_back(vertex);
 		out_uvs.push_back(uv);
 		out_normals.push_back(normal);
