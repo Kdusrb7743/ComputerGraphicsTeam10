@@ -20,6 +20,7 @@ using namespace std;
 Renderer *g_Renderer = NULL;
 
 void TurnOverCameraRotationAnimation(int value);
+bool isCameraRotated = false;
 
 void RenderScene(void)
 {
@@ -39,44 +40,110 @@ void Idle(void)
 	RenderScene();
 }
 
+bool IsPathClear(int startX, int startY, int endX, int endY, ChessPiece piece, PieceColor color) {
+	int deltaX = endX - startX;
+	int deltaY = endY - startY;
+
+	// Rook and Queen (Horizontal and Vertical)
+	if (piece == ChessPiece::Rook || (piece == ChessPiece::Queen && (deltaX == 0 || deltaY == 0))) {
+		int stepX = (deltaX != 0) ? (deltaX > 0 ? 1 : -1) : 0;
+		int stepY = (deltaY != 0) ? (deltaY > 0 ? 1 : -1) : 0;
+
+		for (int x = startX + stepX, y = startY + stepY; x != endX || y != endY; x += stepX, y += stepY) {
+			ChessBoardSquare square = g_Renderer->GetChessPieceAt(x, y);
+			if (square.piece != ChessPiece::Empty) {
+				if (square.color == color || (x != endX || y != endY)) {
+					return false;
+				}
+			}
+		}
+	}
+
+	// Bishop and Queen (Diagonal)
+	if (piece == ChessPiece::Bishop || (piece == ChessPiece::Queen && deltaX != 0 && deltaY != 0)) {
+		int stepX = deltaX > 0 ? 1 : -1;
+		int stepY = deltaY > 0 ? 1 : -1;
+
+		for (int x = startX + stepX, y = startY + stepY; x != endX && y != endY; x += stepX, y += stepY) {
+			ChessBoardSquare square = g_Renderer->GetChessPieceAt(x, y);
+			if (square.piece != ChessPiece::Empty) {
+				if (square.color == color || (x != endX || y != endY)) {
+					return false;
+				}
+			}
+		}
+	}
+
+	// Check the target square for ally piece
+    ChessBoardSquare targetSquare = g_Renderer->GetChessPieceAt(endX, endY);
+	if (targetSquare.piece != ChessPiece::Empty && targetSquare.color == color) {
+		return false;
+	}
+	
+	// Pawn, Knight, and King do not use this function for path checking
+
+
+	return true;
+}
+
 bool IsValidMovePawn(int startX, int startY, int endX, int endY, PieceColor color) {
 	int direction = (color == PieceColor::White) ? -1 : 1;
 
-	//move one tile
-	if (startY == endY && endX == startX + direction) {
-		return true;
-	}
-	//move two tiles
-	if (startY == endY && startX == (color == PieceColor::White ? 6 : 1) && endX == startX + 2 * direction) {
-		return true;
+	// check movement
+	if (startY == endY) {
+		if (endX == startX + direction) {
+			return g_Renderer->GetChessPieceAt(endX, endY).piece == ChessPiece::Empty;
+		}
+		if (startX == (color == PieceColor::White ? 6 : 1) && endX == startX + 2 * direction) {
+			// en'passant check
+			return g_Renderer->GetChessPieceAt(startX + direction, startY).piece == ChessPiece::Empty &&
+				g_Renderer->GetChessPieceAt(endX, endY).piece == ChessPiece::Empty;
+		}
 	}
 
-	//attack for pawn
+	// kill check
 	if (abs(endY - startY) == 1 && endX == startX + direction) {
+		ChessBoardSquare targetSquare = g_Renderer->GetChessPieceAt(endX, endY);
+		return targetSquare.piece != ChessPiece::Empty && targetSquare.color != color;
+	}
+
+	return false;
+}
+
+bool IsValidMoveRook(int startX, int startY, int endX, int endY, PieceColor color) {
+	if (startX == endX || startY == endY) {
+		return IsPathClear(startX, startY, endX, endY, ChessPiece::Rook, color);
+	}
+	return false;
+}
+
+bool IsValidMoveKnight(int startX, int startY, int endX, int endY, PieceColor color) {
+	// check movement
+	if ((abs(startX - endX) == 2 && abs(startY - endY) == 1) || (abs(startX - endX) == 1 && abs(startY - endY) == 2)) {
+		ChessBoardSquare targetSquare = g_Renderer->GetChessPieceAt(endX, endY);
+		// kill check
+		if (targetSquare.piece != ChessPiece::Empty && targetSquare.color == color) return false;
 		return true;
 	}
 	return false;
 }
 
-bool IsValidMoveRook(int startX, int startY, int endX, int endY) {
-	return startX == endX || startY == endY;
+bool IsValidMoveBishop(int startX, int startY, int endX, int endY, PieceColor color) {
+	if (abs(startX - endX) == abs(startY - endY)) {
+		return IsPathClear(startX, startY, endX, endY, ChessPiece::Bishop, color);
+	}
+	return false;
 }
 
-bool IsValidMoveKnight(int startX, int startY, int endX, int endY) {
-	return (abs(startX - endX) == 2 && abs(startY - endY) == 1) || (abs(startX - endX) == 1 && abs(startY - endY) == 2);
+bool IsValidMoveQueen(int startX, int startY, int endX, int endY, PieceColor color) {
+	return IsValidMoveRook(startX, startY, endX, endY, color) || IsValidMoveBishop(startX, startY, endX, endY, color);
 }
 
-bool IsValidMoveBishop(int startX, int startY, int endX, int endY) {
-	return abs(startX - endX) == abs(startY - endY);
+bool IsValidMoveKing(int startX, int startY, int endX, int endY, PieceColor color) {
+	return abs(startX - endX) <= 1 && abs(startY - endY) <= 1 && IsPathClear(startX, startY, endX, endY, ChessPiece::King, color);
 }
 
-bool IsValidMoveQueen(int startX, int startY, int endX, int endY) {
-	return IsValidMoveRook(startX, startY, endX, endY) || IsValidMoveBishop(startX, startY, endX, endY);
-}
 
-bool IsValidMoveKing(int startX, int startY, int endX, int endY) {
-	return abs(startX - endX) <= 1 && abs(startY - endY) <= 1;
-}
 
 ChessBoardSquare selectedPiece;
 bool isPieceSelected = false;
@@ -105,8 +172,17 @@ void MouseInput(int button, int state, int x, int y)
 		//debug - print clicked spot
 		std::cout << "Clicked position in world coordinates: (" << posX << ", " << posY << ", " << posZ << ")" << std::endl;
 
-		int boardX = static_cast<int>((posX + 0.700) / 0.170);
-		int boardY = static_cast<int>((0.700 - posY) / 0.170);
+		int boardX, boardY;
+
+		if (isCameraRotated) {
+			//flip coordinates if flipped
+			boardX = 7 - static_cast<int>((posX + 0.700) / 0.170);
+			boardY = 7 - static_cast<int>((0.700 - posY) / 0.170);
+		}
+		else {
+			boardX = static_cast<int>((posX + 0.700) / 0.170);
+			boardY = static_cast<int>((0.700 - posY) / 0.170);
+		}
 
 		if (boardX >= 0 && boardX < 8 && boardY >= 0 && boardY < 8)
 		{
@@ -138,19 +214,19 @@ void MouseInput(int button, int state, int x, int y)
 					isValidMove = IsValidMovePawn(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				case ChessPiece::Rook:
-					isValidMove = IsValidMoveRook(selectedY, selectedX, boardY, boardX);
+					isValidMove = IsValidMoveRook(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				case ChessPiece::Knight:
-					isValidMove = IsValidMoveKnight(selectedY, selectedX, boardY, boardX);
+					isValidMove = IsValidMoveKnight(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				case ChessPiece::Bishop:
-					isValidMove = IsValidMoveBishop(selectedY, selectedX, boardY, boardX);
+					isValidMove = IsValidMoveBishop(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				case ChessPiece::Queen:
-					isValidMove = IsValidMoveQueen(selectedY, selectedX, boardY, boardX);
+					isValidMove = IsValidMoveQueen(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				case ChessPiece::King:
-					isValidMove = IsValidMoveKing(selectedY, selectedX, boardY, boardX);
+					isValidMove = IsValidMoveKing(selectedY, selectedX, boardY, boardX, selectedPiece.color);
 					break;
 				default:
 					break;
@@ -204,10 +280,12 @@ void TurnOverCameraRotationAnimation(int value) {
 
 	if (((int)TurnChangeRadians % 180) != 0) {	//180±îÁö º¯°æ
 		glutTimerFunc(4, TurnOverCameraRotationAnimation, 1);
+		isCameraRotated = !isCameraRotated;
 	}
 	else {
 
 	}
+	
 
 }
 
