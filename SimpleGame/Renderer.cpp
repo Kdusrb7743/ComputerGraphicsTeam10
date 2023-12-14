@@ -53,6 +53,25 @@ void Renderer::InitializeChessBoard()
 	board[7][4] = { ChessPiece::King, PieceColor::White };
 }
 
+ChessBoardSquare Renderer::GetChessPieceAt(int x, int y)
+{
+	if (x >= 0 && x < 8 && y >= 0 && y < 8)
+	{
+		return board[x][y];
+	}
+	else
+	{
+		return { ChessPiece::Empty, PieceColor::None };
+	}
+}
+
+void Renderer::SetChessPieceAt(int x, int y, ChessBoardSquare piece)
+{
+	if (x >= 0 && x < 8 && y >= 0 && y < 8)
+	{
+		board[x][y] = piece;
+	}
+}
 
 Renderer::Renderer(int windowSizeX, int windowSizeY)
 {

@@ -40,6 +40,8 @@ public:
 	void DrawParticle();								//그리기
 	void DrawParticle2();								//그리기
 	void InitializeChessBoard();
+	ChessBoardSquare GetChessPieceAt(int x, int y);
+	void SetChessPieceAt(int x, int y, ChessBoardSquare piece);
 
 private:
 	void Initialize(int windowSizeX, int windowSizeY);

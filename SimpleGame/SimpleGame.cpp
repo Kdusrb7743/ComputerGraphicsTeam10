@@ -1,4 +1,4 @@
-/*
+ï»¿/*
 Copyright 2022 Lee Taek Hee (Tech University of Korea)
 
 This program is free software: you can redistribute it and/or modify
@@ -29,8 +29,8 @@ void RenderScene(void)
 	// Renderer Test
 	//g_Renderer->DrawSolidRect(0, 0, 0, 4, 1, 0, 1, 1);
 	//g_Renderer->Class0310_Rendering();
-	//g_Renderer->DrawParticle();			// ¹®Á¦ 14
-	g_Renderer->DrawParticle2();		// ¹®Á¦ 16
+	//g_Renderer->DrawParticle();			// Â¹Â®ÃÂ¦ 14
+	g_Renderer->DrawParticle2();		// Â¹Â®ÃÂ¦ 16
 	glutSwapBuffers();
 }
 
@@ -39,15 +39,54 @@ void Idle(void)
 	RenderScene();
 }
 
+ChessBoardSquare selectedPiece;
+bool isPieceSelected = false;
+int selectedX, selectedY;
+
 void MouseInput(int button, int state, int x, int y)
 {
-	RenderScene();
+	if (state == GLUT_DOWN) 
+	{
+		GLint viewport[4];
+		GLdouble modelview[16];
+		GLdouble projection[16];
+		GLfloat winX, winY, winZ;
+		GLdouble posX, posY, posZ;
+
+		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+		glGetDoublev(GL_PROJECTION_MATRIX, projection);
+		glGetIntegerv(GL_VIEWPORT, viewport);
+
+		winX = (float)x;
+		winY = (float)viewport[3] - (float)y;
+		glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+
+		gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+		//debug - print clicked spot
+		std::cout << "Clicked position in world coordinates: (" << posX << ", " << posY << ", " << posZ << ")" << std::endl;
+
+		int boardX = static_cast<int>((posX + 0.700) / 0.170);
+		int boardY = static_cast<int>((0.700 - posY) / 0.170);
+
+		if (boardX >= 0 && boardX < 8 && boardY >= 0 && boardY < 8)
+		{
+			if (g_Renderer->GetChessPieceAt(boardX, boardY).piece != ChessPiece::Empty)
+			{
+				//select piece
+				selectedPiece = g_Renderer->GetChessPieceAt(boardX, boardY);
+				isPieceSelected = true;
+				selectedX = boardX;
+				selectedY = boardY;
+			}
+		}
+	}
 }
 
-// Renderer.cpp Àü¿ªº¯¼ö ºÒ·¯¿À±â
+// Renderer.cpp Ã€Ã¼Â¿ÂªÂºÂ¯Â¼Ã¶ ÂºÃ’Â·Â¯Â¿Ã€Â±Ã¢
 extern float TurnChangeRadians;
 
-// Àü¿ªº¯¼ö
+// Ã€Ã¼Â¿ÂªÂºÂ¯Â¼Ã¶
 bool IsTurnOver = false;
 
 void KeyInput(unsigned char key, int x, int y)
@@ -57,7 +96,7 @@ void KeyInput(unsigned char key, int x, int y)
 		if (IsTurnOver == false) {
 			IsTurnOver = true;
 			TurnOverCameraRotationAnimation(1);
-			//¾Ö´Ï¸ŞÀÌ¼Ç
+			//Â¾Ã–Â´ÃÂ¸ÃÃ€ÃŒÂ¼Ã‡
 		}
 		else if (IsTurnOver == true) {
 			IsTurnOver = false;
@@ -71,7 +110,7 @@ void KeyInput(unsigned char key, int x, int y)
 void TurnOverCameraRotationAnimation(int value) {
 	TurnChangeRadians += 2.0f;
 
-	if (((int)TurnChangeRadians % 180) != 0) {	//180±îÁö º¯°æ
+	if (((int)TurnChangeRadians % 180) != 0) {	//180Â±Ã®ÃÃ¶ ÂºÂ¯Â°Ã¦
 		glutTimerFunc(4, TurnOverCameraRotationAnimation, 1);
 	}
 	else {
@@ -83,19 +122,19 @@ void TurnOverCameraRotationAnimation(int value) {
 void SpecialKeyInput(int key, int x, int y)
 {
 	switch (key) {
-	case GLUT_KEY_LEFT:	// ¿ŞÂÊ ¹æÇâÅ°
+	case GLUT_KEY_LEFT:	// Â¿ÃÃ‚ÃŠ Â¹Ã¦Ã‡Ã¢Ã…Â°
 
 		break;
 
-	case GLUT_KEY_RIGHT: // ¿À¸¥ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_RIGHT: // Â¿Ã€Â¸Â¥Ã‚ÃŠ Â¹Ã¦Ã‡Ã¢Ã…Â°
 
 		break;
 
-	case GLUT_KEY_UP:	// À§ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_UP:	// Ã€Â§Ã‚ÃŠ Â¹Ã¦Ã‡Ã¢Ã…Â°
 
 		break;
 
-	case GLUT_KEY_DOWN:	// ¾Æ·¡ÂÊ ¹æÇâÅ°
+	case GLUT_KEY_DOWN:	// Â¾Ã†Â·Â¡Ã‚ÃŠ Â¹Ã¦Ã‡Ã¢Ã…Â°
 
 		break;
 	}
